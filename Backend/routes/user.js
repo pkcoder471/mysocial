@@ -10,5 +10,10 @@ router.post('/createUser',[
     body('password').isLength({ min: 5 }),
 ],userController.createUser);
 
+router.post('/login',[
+    body('email').isEmail(),
+    body('password').isLength({ min: 5 }),
+],userController.login);
+
 
 module.exports= router;
