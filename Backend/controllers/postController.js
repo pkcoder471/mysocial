@@ -1,5 +1,16 @@
 const Post = require('../models/Post');
 
+module.exports.getallposts = async (req,res) =>{
+    try {
+        let posts = await Post.find({})
+        .sort("-createdAt");
+
+        res.json(posts);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Some Error occured");
+    }
+}
 
 module.exports.create = async (req,res) =>{
     try {
@@ -13,6 +24,24 @@ module.exports.create = async (req,res) =>{
         res.json({savedPost});
     } catch (err) {
         console.log(err);
-        res.status(500).send("Some Error occured");
+        return res.status(500).send("Some Error occured");
+    }
+}
+
+module.exports.deletePost = async (req,res) =>{
+    try {
+        let post = await Post.findById(req.params.id);
+        if(!post){ return res.status(404).json({error:"not found!"})};
+
+        if(post.user.toString()!==req.user.id){
+            return res.status(401).json({error:"unauthorized!"});
+        }
+
+        await Post.findByIdAndDelete(req.params.id);
+
+        res.json({success:"post has been deleted!"});
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Some Error occured");
     }
 }
