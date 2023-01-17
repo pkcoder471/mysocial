@@ -1,6 +1,8 @@
 const {validationResult } = require('express-validator');
 const User = require("../models/User");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = "blahsomething";
 
 module.exports.createUser = async (req,res)=>{
 
@@ -25,7 +27,15 @@ module.exports.createUser = async (req,res)=>{
             password:pass
         });
 
-        res.json(user);
+        let data = {
+            user:{
+                id:user.id
+            }
+        }
+
+        const authToken = jwt.sign(data,JWT_SECRET);
+
+        res.json({authToken});
     } catch (error) {
         console.log(error);
         res.status(500).send("Some Error occured");
@@ -52,7 +62,15 @@ module.exports.login = async (req,res)=>{
             return res.status(400).json({error:"try to login with correct credentials"});
         }
         
-        res.status(200).json(user);
+        let data = {
+            user:{
+                id:user.id
+            }
+        }
+
+        const authToken = jwt.sign(data,JWT_SECRET);
+
+        res.json({authToken});
     } catch (error) {
         console.log(error);
         res.status(500).send("Some Error occured");
