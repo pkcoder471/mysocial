@@ -4,4 +4,7 @@ const commentController = require('../controllers/commentController');
 const fetchUser = require('../middlewares/fetchuser');
 
 router.post('/create/:id',fetchUser,commentController.createcomment);
+router.delete('/delete/:id',fetchUser,commentController.deletecomment);
+router.get('/getall/:id',fetchUser,commentController.getallcomment);
+
 module.exports = router;
