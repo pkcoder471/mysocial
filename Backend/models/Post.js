@@ -9,10 +9,10 @@ const postSchema = new Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'user'
-    }
+    },
 },
 {
     timestamps:true
 })
 
-module.exports = mongoose.model('Post',postSchema);
+module.exports = mongoose.model('post',postSchema);
