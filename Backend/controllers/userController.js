@@ -76,3 +76,26 @@ module.exports.login = async (req,res)=>{
         res.status(500).send("Some Error occured");
     }
 }
+
+module.exports.update = async (req,res)=>{
+    const {name,email,password,about}=req.body;
+    try {
+        let user = await User.findById(req.params.id);
+
+        if(!user){
+            return res.status(404).json({error:"not found"});
+        }
+        if(req.params.id!==req.user.id){
+            return res.status(401).json({error:"unauthorized"});
+        }
+
+        user.name=name;
+        user.about=about;
+
+        user.save();
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Some Error occured");
+    }
+}
