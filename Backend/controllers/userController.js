@@ -1,5 +1,7 @@
 const {validationResult } = require('express-validator');
 const User = require("../models/User");
+const Post = require("../models/Post");
+const Comment = require("../models/Comment");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = "blahsomething";
@@ -94,6 +96,28 @@ module.exports.update = async (req,res)=>{
 
         user.save();
         res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Some Error occured");
+    }
+}
+
+module.exports.delete = async (req,res)=>{
+    try {
+        let user = await User.findById(req.params.id);
+
+        if(!user){
+            return res.status(404).json({error:"not found"});
+        }
+        if(req.params.id!==req.user.id){
+            return res.status(401).json({error:"unauthorized"});
+        }
+
+        await User.findByIdAndDelete(req.params.id);
+        await Post.deleteMany({user:req.params.id});
+        await Comment.deleteMany({user:req.params.id});
+        
+        res.status(200).json({success:"Account has been deleted!"});
     } catch (error) {
         console.log(error);
         res.status(500).send("Some Error occured");

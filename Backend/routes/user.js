@@ -16,7 +16,8 @@ router.post('/login',[
     body('password').isLength({ min: 5 }),
 ],userController.login);
 
-router.post('/update/:id',fetchUser,userController.update);
+router.put('/update/:id',fetchUser,userController.update);
+router.delete('/delete/:id',fetchUser,userController.delete);
 
 
 module.exports= router;

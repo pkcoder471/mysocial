@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 
 module.exports.getallposts = async (req,res) =>{
     try {
@@ -38,7 +39,7 @@ module.exports.deletePost = async (req,res) =>{
         }
 
         await Post.findByIdAndDelete(req.params.id);
-
+        await Comment.deleteMany({post:req.params.id});
         res.json({success:"post has been deleted!"});
     } catch (err) {
         console.log(err);
