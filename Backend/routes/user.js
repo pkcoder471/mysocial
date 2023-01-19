@@ -18,6 +18,7 @@ router.post('/login',[
 
 router.put('/update/:id',fetchUser,userController.update);
 router.delete('/delete/:id',fetchUser,userController.delete);
+router.get('/getUser/:id',fetchUser,userController.getUser);
 
 
 module.exports= router;

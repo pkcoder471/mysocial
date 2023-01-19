@@ -1,9 +1,23 @@
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 
+//feed
 module.exports.getallposts = async (req,res) =>{
     try {
         let posts = await Post.find({})
+        .sort("-createdAt");
+
+        res.json(posts);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Some Error occured");
+    }
+}
+
+//get posts of a particular user
+module.exports.getposts = async (req,res) =>{
+    try {
+        let posts = await Post.find({user:req.params.id})
         .sort("-createdAt");
 
         res.json(posts);

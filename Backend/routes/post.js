@@ -5,7 +5,8 @@ const postController = require('../controllers/postController');
 const fetchUser = require('../middlewares/fetchuser');
 
 router.post('/create',fetchUser,postController.create);
-router.get('/getallposts',fetchUser,postController.getallposts)
+router.get('/getallposts',fetchUser,postController.getallposts);
+router.get('/getposts/:id',fetchUser,postController.getposts);
 router.delete('/delete/:id',fetchUser,postController.deletePost);
 
 
