@@ -1,13 +1,19 @@
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
+const User = require('../models/User')
 
 //feed
 module.exports.getallposts = async (req,res) =>{
     try {
-        let posts = await Post.find({})
-        .sort("-createdAt");
+        let currUser = await User.findById(req.user.id);
+        let userPosts = await Post.find({user:req.user.id});
 
-        res.json(posts);
+        const friendsPosts = await Promise.all(
+            currUser.followings.map((friendId)=>{
+                return Post.find({user:friendId});
+            })
+        );
+        res.status(200).json(userPosts.concat(...friendsPosts));
     } catch (err) {
         console.log(err);
         return res.status(500).send("Some Error occured");

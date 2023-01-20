@@ -131,7 +131,9 @@ module.exports.getUser = async (req,res)=>{
         if(!user){
             return res.status(404).json({error:"not found"});
         }
-        res.json(user);
+        
+        const { password, updatedAt, ...other } = user._doc;
+        res.status(200).json(other);
     } catch (error) {
         console.log(error);
         res.status(500).send("Some Error occured");
