@@ -167,3 +167,28 @@ module.exports.follow = async (req,res)=>{
         res.status(500).send("Some Error occured");
     }
 }
+//todo profile picture
+module.exports.getfriends = async (req,res)=>{
+    try {
+        let user = await User.findById(req.params.id);
+
+        let friends = await Promise.all(
+            user.followings.map((friendId)=>{
+                return User.findById(friendId);
+            })
+        );
+
+        let friendList = [];
+
+        friends.map((friend)=>{
+            const {_id,name} = friend;
+            friendList.push({_id,name});
+        })
+
+        res.json(friendList);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Some Error occured");
+    }
+}
