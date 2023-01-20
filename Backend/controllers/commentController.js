@@ -57,3 +57,25 @@ module.exports.deletecomment = async (req,res)=>{
         return res.status(500).send("Some Error occured");
     }
 }
+
+module.exports.like = async (req,res) =>{
+    try {
+        let comment = await Comment.findById(req.params.id);
+        if(!comment){ return res.status(404).json({error:"not found!"})};
+
+        if(!comment.likes.includes(req.user.id)){
+            await comment.likes.push(req.user.id);
+            comment.save();
+            return res.json({success:"comment has been liked!"});
+        }
+        else{
+            await comment.likes.pull(req.user.id);
+            comment.save();
+            return res.json({success:"comment has been disliked!"});
+        }
+        
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Some Error occured");
+    }
+}

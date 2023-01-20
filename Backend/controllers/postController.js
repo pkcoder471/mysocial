@@ -60,3 +60,25 @@ module.exports.deletePost = async (req,res) =>{
         return res.status(500).send("Some Error occured");
     }
 }
+
+module.exports.like = async (req,res) =>{
+    try {
+        let post = await Post.findById(req.params.id);
+        if(!post){ return res.status(404).json({error:"not found!"})};
+
+        if(!post.likes.includes(req.user.id)){
+            await post.likes.push(req.user.id);
+            post.save();
+            return res.json({success:"post has been liked!"});
+        }
+        else{
+            await post.likes.pull(req.user.id);
+            post.save();
+            return res.json({success:"post has been disliked!"});
+        }
+        
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send("Some Error occured");
+    }
+}

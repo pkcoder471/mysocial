@@ -13,7 +13,13 @@ const commentSchema = new Schema({
     post:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'post'
-    }
+    },
+    likes: [
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'user'
+        }
+    ]
 },
 {
     timestamps:true
