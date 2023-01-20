@@ -18,7 +18,19 @@ const userSchema = new Schema({
      about:{
          type:String,
          default:""
-     }
+     },
+     followers: [
+         {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'user'
+         }
+     ],
+     followings: [
+      {
+         type:mongoose.Schema.Types.ObjectId,
+         ref:'user'
+      }
+      ],
 },
 {
     timestamps:true

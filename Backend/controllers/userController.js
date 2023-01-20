@@ -137,3 +137,33 @@ module.exports.getUser = async (req,res)=>{
         res.status(500).send("Some Error occured");
     }
 }
+
+module.exports.follow = async (req,res)=>{
+    try {
+        if(req.params.id===req.user.id){
+            return res.status(403).json({error:"You can't follow yourself!"})
+        }
+        let user = await User.findById(req.params.id);
+        let curruser= await User.findById(req.user.id);
+
+        if(!user.followers.includes(req.user.id)){
+            await user.followers.push(req.user.id);
+            await curruser.followings.push(req.params.id);
+            user.save();
+            curruser.save();
+            res.status(200).json({success:"you followed a user"});
+        }
+        else{
+            await user.followers.pull(req.user.id);
+            await curruser.followings.pull(req.params.id);
+            user.save();
+            curruser.save();
+            res.status(200).json({success:"you unfollowed a user"});
+
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Some Error occured");
+    }
+}
