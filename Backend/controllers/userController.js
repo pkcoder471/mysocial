@@ -7,17 +7,20 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = "blahsomething";
 
 module.exports.createUser = async (req,res)=>{
-
+    let success = false;
     const errors = validationResult(req); 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     try {
+        
+        console.log('hello');
+
         let user = await User.findOne({email:req.body.email});
 
         if(user){
-            return res.status(400).json({error:"sorry user with this email address already exists"});
+            return res.status(400).json({success,error:"sorry user with this email address already exists"});
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -36,16 +39,16 @@ module.exports.createUser = async (req,res)=>{
         }
 
         const authToken = jwt.sign(data,JWT_SECRET);
-
-        res.json({authToken});
+        success = true;
+        res.json({success,authToken});
     } catch (error) {
         console.log(error);
-        res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
     }
 }
 
 module.exports.login = async (req,res)=>{
-
+    let success = false;
     const errors = validationResult(req); 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -55,13 +58,13 @@ module.exports.login = async (req,res)=>{
         let user = await User.findOne({email:req.body.email});
 
         if(!user){
-            return res.status(400).json({error:"try to login with correct credentials"});
+            return res.status(400).json({success,error:"try to login with correct credentials"});
         }
 
         const passwordCompare = bcrypt.compare(req.body.password,user.password);
 
         if(!passwordCompare){
-            return res.status(400).json({error:"try to login with correct credentials"});
+            return res.status(400).json({success,error:"try to login with correct credentials"});
         }
         
         let data = {
@@ -71,8 +74,8 @@ module.exports.login = async (req,res)=>{
         }
 
         const authToken = jwt.sign(data,JWT_SECRET);
-
-        res.json({authToken});
+        success= true;
+        res.json({success,authToken});
     } catch (error) {
         console.log(error);
         res.status(500).send("Some Error occured");
