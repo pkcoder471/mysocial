@@ -1,10 +1,9 @@
 import UserContext from "./userContext";
 
-
 const UserState = (props) => {
    
-    const url = 'http://localhost:5000'
-
+    const url = 'http://localhost:5000';
+    
     const login = async (email, password) => {
         const response = await fetch(`${url}/api/user/login`, {
             method: 'POST',
@@ -17,7 +16,11 @@ const UserState = (props) => {
         console.log(json);
 
         if (json.success) {
-            await localStorage.setItem('token', json.authToken);
+            localStorage.setItem('token', json.authToken);
+            
+        }
+        else{
+            alert("invalid credentials")
         }
     }
 
@@ -34,13 +37,17 @@ const UserState = (props) => {
         console.log(json);
 
         if (json.success) {
-            await localStorage.setItem('token', json.authToken);
+            localStorage.setItem('token', json.authToken);
+        }
+        else{
+            alert("Invalid credentials")
+            
         }
 
     }
 
     return (
-        <UserContext.Provider value={{ login, signUp }}>
+        <UserContext.Provider value={{ login, signUp}}>
             {props.children}
         </UserContext.Provider>
     )

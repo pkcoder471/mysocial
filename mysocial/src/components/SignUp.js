@@ -1,58 +1,64 @@
-import React,{useContext, useState} from 'react';
-import userContext from '../context/users/userContext';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-
-
 
 const SignUp = () => {
     const navigate = useNavigate();
-    const context = useContext(userContext)
-    const [credentials, setcredentials] = useState({name:"",email:"",password:"",cpassword:""});
+    const [credentials, setcredentials] = useState({ name: "", email: "", password: "", cpassword: "" });
+    const url = 'http://localhost:5000';
 
-    const {signUp} = context;
-
-    const handleSignup = async (e) =>{
+    const handleSignup = async (e) => {
         e.preventDefault();
-        if(credentials.password!==credentials.cpassword){
+        if (credentials.password !== credentials.cpassword) {
             alert("password don't match");
         }
-        else{
-        signUp(credentials.name,credentials.email,credentials.password);
-        const token = await localStorage.getItem('token');
-        if(token){
-            navigate("/");
-        }
-        else{
-            alert('try login using valid credentials')
-        }
-        }
-    }   
+        else {
 
-    const onChange = (e) =>{
-        setcredentials({...credentials,[e.target.name]:e.target.value})
+            const { name, email, password } = credentials;
+            const response = await fetch(`${url}/api/user/createUser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, password })
+            });
+            const json = await response.json();
+            console.log(json);
+
+            if (json.success) {
+                localStorage.setItem('token', json.authToken);
+                navigate('/');
+            }
+            else {
+                alert("Invalid credentials")
+            }
+        }
+    }
+
+    const onChange = (e) => {
+        setcredentials({ ...credentials, [e.target.name]: e.target.value })
     }
 
     return (
-        <div className='container'>
-            <form onSubmit={handleSignup} >
-                <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" onChange={onChange} name='name'/>
+
+        <div className='signUp'>
+            <div className="signUpWrapper">
+                <div className="signUpLeft">
+                    <h3 className="signUpLogo">MySocial</h3>
+                    <span className="signUpDesc">
+                        Connect with friends and the world around you <br/> on MySocial.
+                    </span>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email" onChange={onChange} name="email" aria-describedby="emailHelp"/>
+                <div className="signUpRight">
+                    <form onSubmit={handleSignup} className="signUpBox" >
+                        <input type="text" className="signUpInput" id="name" onChange={onChange} name='name' placeholder='Name' minLength={5} />
+                        <input type="email" className="signUpInput" id="email" onChange={onChange} name="email" placeholder='Email' minLength={5}/>
+                        <input type="password" className="signUpInput" name="password" onChange={onChange} id="password" placeholder='Password' minLength={5}/>
+                        <input type="password" className="signUpInput" name="cpassword" onChange={onChange} id="cpassword" placeholder='Confirm Password' minLength={5}/>
+                        <button type="submit" className="signUpButton" >Sign Up</button>
+                        <button className="signUpRegisterButton" onClick={()=>{navigate('/login')}}>Log into Account</button>
+                    </form>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" name="password" onChange={onChange} id="password"/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="cpassword" className="form-label">Confirm Password</label>
-                    <input type="password" className="form-control" name="cpassword" onChange={onChange}id="cpassword"/>
-                </div>
-                <button type="submit" className="btn btn-primary" >Submit</button>
-            </form>
+            </div>
         </div>
     )
 }

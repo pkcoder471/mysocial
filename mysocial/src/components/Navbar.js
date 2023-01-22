@@ -1,6 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const handleLogout = (e) =>{
+        e.preventDefault();
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
     return (
         <div>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -17,6 +24,9 @@ const Navbar = () => {
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="/">Home</a>
+                            </li>
+                            <li>
+                            <button className="btn btn-outline-success" type="submit" onClick={handleLogout}>Logout</button>
                             </li>
                         </ul>
                         
