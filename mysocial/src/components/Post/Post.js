@@ -2,28 +2,39 @@ import React,{useEffect,useState} from 'react'
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import userContext from '../../context/users/userContext';
+import postContext from '../../context/posts/postContext';
 import { useContext } from 'react';
 
 const Post = (post) => {
 
     const PF="../../public/assets/img/"
 
-    const context = useContext(userContext);
+    const contextuser = useContext(userContext);
+    const contextpost = useContext(postContext);
 
-    const {user,getUser} = context;
+    const {user,getUser,getCurruser,curruser} = contextuser;
+    const {likePost} = contextpost;
     
     const [like, setlike] = useState(post.like.length)
     const [isliked, setisliked] = useState(false);
 
     useEffect(() => {
-      
+      if(post.like.includes(curruser)){
+        setisliked(true);
+      }
     },)
     
 
     useEffect(() => {
-        getUser();
+        getUser(post.user);
+        getCurruser();
     },)
     
+    const likeHandler = () =>{
+        likePost(post._id);
+        setlike(isliked?like-1:like+1);
+        setisliked(!isliked);
+    }
   return (
     <div className="post">
       <div className="postWrapper">
@@ -40,7 +51,7 @@ const Post = (post) => {
                 alt=""
               /> */}
             </Link>
-            <span className="postUsername">{user.username}</span>
+            <span className="postUsername">{user.name}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">

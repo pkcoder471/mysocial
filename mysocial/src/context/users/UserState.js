@@ -4,42 +4,36 @@ const UserState = (props) => {
    
     const url = 'http://localhost:5000';
     const [user, setuser] = useState({})
+    const [curruser, setcurruser] = useState({})
 
     const getUser = async (id) => {
         const response = await fetch(`${url}/api/user/getUser/${id}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
             },
         });
         const json = await response.json();
         setuser(json);
     }
 
-    const signUp = async (name, email, password) => {
+    const getCurruser = async () => {
 
-        const response = await fetch(`${url}/api/user/createUser`, {
-            method: 'POST',
+        const response = await fetch(`${url}/api/user/getCurruser`, {
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
             },
-            body: JSON.stringify({ name, email, password })
         });
         const json = await response.json();
-        console.log(json);
-
-        if (json.success) {
-            localStorage.setItem('token', json.authToken);
-        }
-        else{
-            alert("Invalid credentials")
-            
-        }
+        setcurruser(json);
 
     }
 
     return (
-        <UserContext.Provider value={{ getUser,user,signUp}}>
+        <UserContext.Provider value={{ getUser,user,getCurruser,curruser}}>
             {props.children}
         </UserContext.Provider>
     )
