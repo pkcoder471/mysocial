@@ -15,6 +15,7 @@ const PostState = (props) =>{
         const json = await response.json();
         console.log(json);
     }
+    
     return(
         <postContext.Provider value={{likePost}}>
             {props.children}

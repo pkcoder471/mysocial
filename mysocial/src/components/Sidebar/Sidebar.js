@@ -7,7 +7,7 @@ const Sidebar = () => {
             <div className="sidebarWrapper">
                 <ul className="sidebarList">
                     <li className="sidebarListItem">
-                        <i class="fa-sharp fa-solid fa-rss sidebarIcon"></i>
+                        <i className="fa-sharp fa-solid fa-rss sidebarIcon"></i>
                         <span className="sidebarListItemText">Feed</span>
                     </li>
                     <li className="sidebarListItem">
@@ -15,19 +15,19 @@ const Sidebar = () => {
                         <span className="sidebarListItemText">Chats</span>
                     </li>
                     <li className="sidebarListItem">
-                    <i class="fa-solid fa-user-group sidebarIcon"></i>                    
+                    <i className="fa-solid fa-user-group sidebarIcon"></i>                    
                     <span className="sidebarListItemText">Groups</span>
                     </li>
                     <li className="sidebarListItem">
-                        <i class="fa-solid fa-circle-question sidebarIcon"></i>
+                        <i className="fa-solid fa-circle-question sidebarIcon"></i>
                         <span className="sidebarListItemText">FAQs</span>
                     </li>
                     <li className="sidebarListItem">
-                    <i class="fa-solid fa-briefcase sidebarIcon"></i>
+                    <i className="fa-solid fa-briefcase sidebarIcon"></i>
                         <span className="sidebarListItemText">Jobs</span>
                     </li>
                     <li className="sidebarListItem">
-                        <i class="fa-solid fa-calendar-days sidebarIcon"></i>
+                        <i className="fa-solid fa-calendar-days sidebarIcon"></i>
                         <span className="sidebarListItemText">Events</span>
                     </li>
                 </ul>

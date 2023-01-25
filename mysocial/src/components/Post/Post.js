@@ -55,7 +55,7 @@ const Post = (post) => {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-          <i class="fa-solid fa-ellipsis-vertical"></i>
+          <i className="fa-solid fa-ellipsis-vertical"></i>
           </div>
         </div>
         <div className="postCenter">
