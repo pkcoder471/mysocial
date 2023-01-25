@@ -1,27 +1,19 @@
 import UserContext from "./userContext";
-
+import { useState } from "react";
 const UserState = (props) => {
    
     const url = 'http://localhost:5000';
-    
-    const login = async (email, password) => {
-        const response = await fetch(`${url}/api/user/login`, {
-            method: 'POST',
+    const [user, setuser] = useState({})
+
+    const getUser = async (id) => {
+        const response = await fetch(`${url}/api/user/getUser/${id}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
         });
         const json = await response.json();
-        console.log(json);
-
-        if (json.success) {
-            localStorage.setItem('token', json.authToken);
-            
-        }
-        else{
-            alert("invalid credentials")
-        }
+        setuser(json);
     }
 
     const signUp = async (name, email, password) => {
@@ -47,7 +39,7 @@ const UserState = (props) => {
     }
 
     return (
-        <UserContext.Provider value={{ login, signUp}}>
+        <UserContext.Provider value={{ getUser,user,signUp}}>
             {props.children}
         </UserContext.Provider>
     )

@@ -197,3 +197,13 @@ module.exports.getfriends = async (req,res)=>{
         res.status(500).send("Some Error occured");
     }
 }
+
+module.exports.curruser = (req,res) =>{
+    try {
+        res.json(req.user.id);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Some Error occured");
+    }
+    
+}

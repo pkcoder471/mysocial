@@ -21,6 +21,8 @@ router.delete('/delete/:id',fetchUser,userController.delete);
 router.get('/getUser/:id',fetchUser,userController.getUser);
 router.post('/follow/:id',fetchUser,userController.follow);
 router.get('/getfriends/:id',fetchUser,userController.getfriends);
+router.get('/getcurr',fetchUser,userController.curruser);
+
 
 
 module.exports= router;
