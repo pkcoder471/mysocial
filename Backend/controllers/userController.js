@@ -198,9 +198,13 @@ module.exports.getfriends = async (req,res)=>{
     }
 }
 
-module.exports.curruser = (req,res) =>{
+module.exports.curruser = async (req,res) =>{
     try {
-        res.json(req.user.id);
+        const user = await User.findById(req.user.id);  
+        if(!user){
+            return res.status(404).json({error:"not found"});
+        }          
+        res.status(200).json(user);
     } catch (error) {
         console.log(error);
         res.status(500).send("Some Error occured");

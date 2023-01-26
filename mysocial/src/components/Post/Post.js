@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import userContext from '../../context/users/userContext';
 import postContext from '../../context/posts/postContext';
 import { useContext } from 'react';
+import "./post.css"
 
-const Post = (post) => {
+const Post = ({post}) => {
 
-    const PF="../../public/assets/img/"
+    const PF="assests/img/"
 
     const contextuser = useContext(userContext);
     const contextpost = useContext(postContext);
@@ -15,24 +16,21 @@ const Post = (post) => {
     const {user,getUser,getCurruser,curruser} = contextuser;
     const {likePost} = contextpost;
     
-    const [like, setlike] = useState(post.like.length)
+    const [like, setlike] = useState(post.likes.length)
     const [isliked, setisliked] = useState(false);
 
     useEffect(() => {
-      if(post.like.includes(curruser)){
-        setisliked(true);
-      }
-    },)
-    
 
-    useEffect(() => {
         getUser(post.user);
         getCurruser();
-    },)
+        if(post.likes.includes(curruser._id)){
+          setisliked(true);
+        }
+    },[])
     
     const likeHandler = () =>{
         likePost(post._id);
-        setlike(isliked?like-1:like+1);
+        setlike( isliked ? like-1 : like+1);
         setisliked(!isliked);
     }
   return (
@@ -41,15 +39,15 @@ const Post = (post) => {
         <div className="postTop">
           <div className="postTopLeft">
             <Link to={`/profile/${user.id}`}>
-              {/* <img
+              <img
                 className="postProfileImg"
                 src={
                   user.profilePicture
                     ? PF + user.profilePicture
-                    : PF + "person/noAvatar.png"
+                    : PF + "noAvatar.png"
                 }
                 alt=""
-              /> */}
+              />
             </Link>
             <span className="postUsername">{user.name}</span>
             <span className="postDate">{format(post.createdAt)}</span>
@@ -59,8 +57,8 @@ const Post = (post) => {
           </div>
         </div>
         <div className="postCenter">
-          <span className="postText">{post.desc}</span>
-          {/* <img className="postImg" src={PF + post.img} alt="" /> */}
+          <span className="postText">{post.content}</span>
+          <img className="postImg" src={PF + post.img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
