@@ -21,6 +21,10 @@ const Addpost = () => {
 
     }
 
+    const onChange = () =>{
+        
+    }
+
   return (
     <div className="share">
       <div className="shareWrapper">
@@ -37,6 +41,7 @@ const Addpost = () => {
           <input
             placeholder={"What's in your mind " + curruser.name + "?"}
             className="shareInput"
+            onChange={onChange}
           />
         </div>
         <hr className="shareHr" />
