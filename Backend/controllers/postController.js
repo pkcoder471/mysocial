@@ -6,11 +6,11 @@ const User = require('../models/User')
 module.exports.getallposts = async (req,res) =>{
     try {
         let currUser = await User.findById(req.user.id);
-        let userPosts = await Post.find({user:req.user.id}).sort('-createdAt');
+        let userPosts = await Post.find({user:req.user.id});
 
         const friendsPosts = await Promise.all(
             currUser.followings.map((friendId)=>{
-                return Post.find({user:friendId}).sort('-createdAt');
+                return Post.find({user:friendId});
             })
         );
         res.status(200).json(userPosts.concat(...friendsPosts));

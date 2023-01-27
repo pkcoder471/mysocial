@@ -38,7 +38,7 @@ const Addpost = () => {
             src={
               curruser.profilePicture
                 ? PF + curruser.profilePicture
-                : PF + "person/noAvatar.png"
+                : PF + "noAvatar.png"
             }
             alt=""
           />
