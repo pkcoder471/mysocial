@@ -1,35 +1,76 @@
 import React,{useEffect,useState} from 'react'
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import userContext from '../../context/users/userContext';
-import postContext from '../../context/posts/postContext';
-import { useContext } from 'react';
 import "./post.css"
 
-const Post = ({post}) => {
-
+const Post = (props) => {
+    let {post} = props;
     const PF="assests/img/"
+    const url = 'http://localhost:5000';
+    const [user, setuser] = useState({})
+    const [curruser, setcurruser] = useState({})
 
-    const contextuser = useContext(userContext);
-    const contextpost = useContext(postContext);
 
-    const {user,getUser,getCurruser,curruser} = contextuser;
-    const {likePost} = contextpost;
-    
+    // console.log(post);
     const [like, setlike] = useState(post.likes.length)
     const [isliked, setisliked] = useState(false);
 
-    useEffect(() => {
-
-        getUser(post.user);
-        getCurruser();
-        if(post.likes.includes(curruser._id)){
-          setisliked(true);
-        }
-    },[])
     
-    const likeHandler = () =>{
-        likePost(post._id);
+    
+
+    useEffect(() => {
+      const getUser = async () => {
+        const response = await fetch(`${url}/api/user/getUser/${post.user}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
+            },
+        });
+        const json = await response.json();
+        console.log(json);
+        setuser(json);
+        console.log(user)
+    }
+    getUser();
+        //eslint-disable-next-line
+    },[post.user])
+    
+    useEffect(() => {
+      const getCurruser = async () => {
+
+        const response = await fetch(`${url}/api/user/getCurruser`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
+            },
+        });
+        const json = await response.json();
+        setcurruser(json);
+
+    }
+    getCurruser();
+      //eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+      setisliked(post.likes.includes(curruser._id));
+      //eslint-disable-next-line
+    }, [curruser._id, post.likes])
+    
+    const likeHandler = async () =>{
+      const likePost = async () =>{
+        const response = await fetch(`${url}/api/post/like/${post._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
+            },
+        });
+        const json = await response.json();
+      }
+      likePost();
         setlike( isliked ? like-1 : like+1);
         setisliked(!isliked);
     }
@@ -38,7 +79,7 @@ const Post = ({post}) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`/profile/${user.id}`}>
+            <Link to={`/profile/${user._id}`}>
               <img
                 className="postProfileImg"
                 src={

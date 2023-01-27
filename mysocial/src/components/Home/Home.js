@@ -4,13 +4,20 @@ import Feed from '../Feed/Feed';
 import Navbar from '../Navbar/Navbar'
 import Rightbar from '../RIghtbar/Rightbar';
 import Sidebar from '../Sidebar/Sidebar';
+import postContext from '../../context/posts/postContext'
+import { useContext } from 'react'
 import "./home.css"
 const Home = () => {
   const navigate = useNavigate();
+  const contextpost = useContext(postContext);
+  const {getPosts,posts} =  contextpost;
   useEffect(() => {
 
     if(!localStorage.getItem('token')){
       navigate('/login');
+    }
+    else{
+      getPosts();
     }
     //eslint-disable-next-line
   }, [])
@@ -21,7 +28,7 @@ const Home = () => {
       <Navbar />
       <div className="homeContainer">
         <Sidebar />
-        <Feed/>
+        <Feed posts={posts}/>
         <Rightbar/>
       </div>
     </>

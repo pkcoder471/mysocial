@@ -1,7 +1,6 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useContext,useState} from 'react'
 import userContext from '../../context/users/userContext';
 import postContext from '../../context/posts/postContext';
-import { useContext } from 'react';
 import "./addpost.css"
 
 const Addpost = () => {
@@ -10,19 +9,24 @@ const Addpost = () => {
     const contextuser = useContext(userContext);
     const contextpost = useContext(postContext);
 
-    const {user,getUser,getCurruser,curruser} = contextuser;
-    const {likePost} = contextpost;
+    const {getCurruser,curruser} = contextuser;
+    const {addPost} = contextpost;
+    const [post, setpost] = useState({caption:""})
 
     useEffect(() => {
         getCurruser();
+        //eslint-disable-next-line
     },[])
 
-    const submitHandler = () =>{
+    const submitHandler = async (e) =>{
+        e.preventDefault();
+        addPost(post.caption);
+        setpost({caption:""});
 
     }
 
-    const onChange = () =>{
-        
+    const onChange = (e) =>{
+        setpost({...post,[e.target.name]:e.target.value});
     }
 
   return (
@@ -32,7 +36,7 @@ const Addpost = () => {
           <img
             className="shareProfileImg"
             src={
-              user.profilePicture
+              curruser.profilePicture
                 ? PF + curruser.profilePicture
                 : PF + "person/noAvatar.png"
             }
@@ -41,6 +45,8 @@ const Addpost = () => {
           <input
             placeholder={"What's in your mind " + curruser.name + "?"}
             className="shareInput"
+            name="caption"
+            value={post.caption}
             onChange={onChange}
           />
         </div>

@@ -15,7 +15,9 @@ const UserState = (props) => {
             },
         });
         const json = await response.json();
+        console.log(json);
         setuser(json);
+        console.log(user)
     }
 
     const getCurruser = async () => {

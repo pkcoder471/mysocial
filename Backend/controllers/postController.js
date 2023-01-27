@@ -10,9 +10,9 @@ module.exports.getallposts = async (req,res) =>{
 
         const friendsPosts = await Promise.all(
             currUser.followings.map((friendId)=>{
-                return Post.find({user:friendId});
+                return Post.find({user:friendId}).sort('-createdAt');
             })
-        ).sort('-createdAt');
+        );
         res.status(200).json(userPosts.concat(...friendsPosts));
     } catch (err) {
         console.log(err);
@@ -35,14 +35,12 @@ module.exports.getposts = async (req,res) =>{
 
 module.exports.create = async (req,res) =>{
     try {
-        let post = new Post({
+        let post = await Post.create({
             content:req.body.content,
             user:req.user.id
         })
 
-        let savedPost = await post.save();
-
-        res.json({savedPost});
+        res.json(post);
     } catch (err) {
         console.log(err);
         return res.status(500).send("Some Error occured");
@@ -73,13 +71,11 @@ module.exports.like = async (req,res) =>{
         if(!post){ return res.status(404).json({error:"not found!"})};
 
         if(!post.likes.includes(req.user.id)){
-            await post.likes.push(req.user.id);
-            post.save();
+            await post.updateOne({ $push: { likes: req.user.id } });
             return res.json({success:"post has been liked!"});
         }
         else{
-            await post.likes.pull(req.user.id);
-            post.save();
+            await post.updateOne({ $pull: { likes: req.user.id } });
             return res.json({success:"post has been disliked!"});
         }
         
