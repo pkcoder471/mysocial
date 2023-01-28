@@ -48,20 +48,22 @@ module.exports.create = async (req,res) =>{
 }
 
 module.exports.deletePost = async (req,res) =>{
+    let success=false;
     try {
         let post = await Post.findById(req.params.id);
-        if(!post){ return res.status(404).json({error:"not found!"})};
+        if(!post){ return res.status(404).json({succcess,error:"not found!"})};
 
         if(post.user.toString()!==req.user.id){
-            return res.status(401).json({error:"unauthorized!"});
+            return res.status(401).json({success,error:"unauthorized!"});
         }
 
         await Post.findByIdAndDelete(req.params.id);
         await Comment.deleteMany({post:req.params.id});
-        res.json({success:"post has been deleted!"});
+        success=true;
+        res.json({success,msg:"post has been deleted!"});
     } catch (err) {
         console.log(err);
-        return res.status(500).send("Some Error occured");
+        return res.status(500).send(success,"Some Error occured");
     }
 }
 

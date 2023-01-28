@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useContext } from 'react'
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import "./post.css"
+import postContext from '../../context/posts/postContext';
 
+import "./post.css"
 const Post = (props) => {
-  
-  const [menuOpen, setMenuOpen] = useState(false);
   let { post } = props;
+
+  const contextpost = useContext(postContext);
+  const {deletePost} = contextpost;
+  
   const PF = "assests/img/"
   const url = 'http://localhost:5000';
   const [user, setuser] = useState({})
   const [curruser, setcurruser] = useState({})
-
 
   // console.log(post);
   const [like, setlike] = useState(post.likes.length)
@@ -74,8 +76,9 @@ const Post = (props) => {
     setisliked(!isliked);
   }
 
-  const handleDelete = () =>{
-
+  const handleDelete = (e) => {
+    e.preventDefault();
+    deletePost(post._id);
   }
   return (
     <div className="post">
@@ -97,10 +100,12 @@ const Post = (props) => {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            <i className="fa-solid fa-ellipsis-vertical" onClick={() => setMenuOpen(!menuOpen)}></i>
-          {menuOpen && post.user === curruser._id && (
-            <button onClick={handleDelete}>delete</button>
-          )}
+            {curruser._id === post.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
+            <div class="dropdown">
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="postCenter">

@@ -47,9 +47,28 @@ const PostState = (props) =>{
         newPosts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
         setposts(newPosts);
     }
+
+    const deletePost = async (id) =>{
+        const response = await fetch(`${url}/api/post/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
+            },
+        });
+        const json = await response.json();
+        console.log(json);
+        if(json.success){
+        const newPosts = posts.filter((post) => { return post._id !== id });
+        setposts(newPosts);
+        }
+        else{
+            alert("unauthorized!");
+        }
+    }
     
     return(
-        <postContext.Provider value={{likePost,getPosts,posts,addPost}}>
+        <postContext.Provider value={{likePost,getPosts,posts,addPost,deletePost}}>
             {props.children}
         </postContext.Provider>
     )
