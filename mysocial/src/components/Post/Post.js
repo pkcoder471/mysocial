@@ -15,7 +15,6 @@ const Post = (props) => {
   const [user, setuser] = useState({})
   const [curruser, setcurruser] = useState({})
 
-  // console.log(post);
   const [like, setlike] = useState(post.likes.length)
   const [isliked, setisliked] = useState(false);
 
@@ -29,9 +28,7 @@ const Post = (props) => {
         },
       });
       const json = await response.json();
-      console.log(json);
       setuser(json);
-      console.log(user)
     }
     getUser();
     //eslint-disable-next-line
@@ -70,6 +67,7 @@ const Post = (props) => {
         },
       });
       const json = await response.json();
+      console.log(json);
     }
     likePost();
     setlike(isliked ? like - 1 : like + 1);
@@ -101,9 +99,9 @@ const Post = (props) => {
           </div>
           <div className="postTopRight">
             {curruser._id === post.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
-            <div class="dropdown">
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
+            <div className="dropdown">
+              <ul className="dropdown-menu">
+                <li><a className="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
               </ul>
             </div>
           </div>
