@@ -50,7 +50,6 @@ const Navbar = () => {
             <div className="topbarRight">
                 <div className="topbarLinks">
                     <span className="topbarLink">Homepage</span>
-                    <span className="topbarLink">Timeline</span>
                 </div>
                 <div className="topbarIcons">
                     <div className="topbarIconItem">
@@ -62,18 +61,17 @@ const Navbar = () => {
                         <span className="topbarIconBadge">1</span>
                     </div>
                 </div>
-                
-                    <img
-                        src={
-                            curruser.profilePicture
-                                ? PF + curruser.profilePicture
-                                : PF + "noAvatar.png"
-                        }
-                        alt=""
-                        className="topbarImg"
-                        data-bs-toggle="dropdown" 
-                        aria-expanded="false"
-                    />
+                <img
+                    src={
+                        curruser.profilePicture
+                            ? PF + curruser.profilePicture
+                            : PF + "noAvatar.png"
+                    }
+                    alt=""
+                    className="topbarImg"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                />
                 <div className="dropdown">
                     <ul className="dropdown-menu">
                         <li><a className="dropdown-item" href="/">Profile</a></li>

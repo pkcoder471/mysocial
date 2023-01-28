@@ -3,11 +3,11 @@ import { useState } from "react";
 const UserState = (props) => {
    
     const url = 'http://localhost:5000';
-    const [user, setuser] = useState({})
+    const [Users, setUsers] = useState([])
     const [curruser, setcurruser] = useState({})
 
-    const getUser = async (id) => {
-        const response = await fetch(`${url}/api/user/getUser/${id}`, {
+    const getFriends = async (id) => {
+        const response = await fetch(`${url}/api/user/getfriends/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -15,9 +15,7 @@ const UserState = (props) => {
             },
         });
         const json = await response.json();
-        console.log(json);
-        setuser(json);
-        console.log(user)
+        setUsers(json);
     }
 
     const getCurruser = async () => {
@@ -35,7 +33,7 @@ const UserState = (props) => {
     }
 
     return (
-        <UserContext.Provider value={{ getUser,user,getCurruser,curruser}}>
+        <UserContext.Provider value={{ getFriends,Users,getCurruser,curruser}}>
             {props.children}
         </UserContext.Provider>
     )

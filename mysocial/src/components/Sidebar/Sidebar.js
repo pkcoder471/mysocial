@@ -1,7 +1,34 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import CloseFriend from '../CloseFriend/CloseFriend';
+import userContext from '../../context/users/userContext';
+
 import "./sidebar.css";
 
 const Sidebar = () => {
+    const context = useContext(userContext);
+    const { getFriends, Users } = context;
+
+    const url = 'http://localhost:5000';
+
+
+    useEffect(() => {
+        const getCurruser = async () => {
+            const response = await fetch(`${url}/api/user/getCurruser`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': localStorage.getItem('token')
+                },
+            });
+            const json = await response.json();
+            getFriends(json._id)
+        }
+        getCurruser();
+        
+        //eslint-disable-next-line
+    }, [])
+    
+
     return (
         <div className="sidebar">
             <div className="sidebarWrapper">
@@ -15,15 +42,15 @@ const Sidebar = () => {
                         <span className="sidebarListItemText">Chats</span>
                     </li>
                     <li className="sidebarListItem">
-                    <i className="fa-solid fa-user-group sidebarIcon"></i>                    
-                    <span className="sidebarListItemText">Groups</span>
+                        <i className="fa-solid fa-user-group sidebarIcon"></i>
+                        <span className="sidebarListItemText">Groups</span>
                     </li>
                     <li className="sidebarListItem">
                         <i className="fa-solid fa-circle-question sidebarIcon"></i>
                         <span className="sidebarListItemText">FAQs</span>
                     </li>
                     <li className="sidebarListItem">
-                    <i className="fa-solid fa-briefcase sidebarIcon"></i>
+                        <i className="fa-solid fa-briefcase sidebarIcon"></i>
                         <span className="sidebarListItemText">Jobs</span>
                     </li>
                     <li className="sidebarListItem">
@@ -32,11 +59,11 @@ const Sidebar = () => {
                     </li>
                 </ul>
                 <hr className="sidebarHr" />
-                {/* <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
-          ))}
-        </ul> */}
+                <ul className="sidebarFriendList">
+                    {Users.map((u) => {
+                        return <CloseFriend key={u._id} user={u} />
+                    })}
+                </ul>
             </div>
         </div>
     )

@@ -8,14 +8,14 @@ const Post = (props) => {
   let { post } = props;
 
   const contextpost = useContext(postContext);
-  const {deletePost} = contextpost;
+  const {deletePost,likePost} = contextpost;
   
   const PF = "assests/img/"
   const url = 'http://localhost:5000';
   const [user, setuser] = useState({})
   const [curruser, setcurruser] = useState({})
 
-  const [like, setlike] = useState(post.likes.length)
+  const [like, setlike] = useState(0)
   const [isliked, setisliked] = useState(false);
 
   useEffect(() => {
@@ -31,8 +31,9 @@ const Post = (props) => {
       setuser(json);
     }
     getUser();
+    setlike(post.likes.length);
     //eslint-disable-next-line
-  }, [post.user])
+  }, [post.user,post.likes])
 
   useEffect(() => {
     const getCurruser = async () => {
@@ -45,31 +46,16 @@ const Post = (props) => {
         },
       });
       const json = await response.json();
+      setisliked(post.likes.includes(json._id));
       setcurruser(json);
 
     }
     getCurruser();
     //eslint-disable-next-line
-  }, [])
-
-  useEffect(() => {
-    setisliked(post.likes.includes(curruser._id));
-    //eslint-disable-next-line
   }, [curruser._id, post.likes])
 
   const likeHandler = () => {
-    const likePost = async () => {
-      const response = await fetch(`${url}/api/post/like/${post._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token': localStorage.getItem('token')
-        },
-      });
-      const json = await response.json();
-      console.log(json);
-    }
-    likePost();
+    likePost(post._id);
     setlike(isliked ? like - 1 : like + 1);
     setisliked(!isliked);
   }

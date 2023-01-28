@@ -19,7 +19,7 @@ router.post('/login',[
 router.put('/update/:id',fetchUser,userController.update);
 router.delete('/delete/:id',fetchUser,userController.delete);
 router.get('/getUser/:id',fetchUser,userController.getUser);
-router.post('/follow/:id',fetchUser,userController.follow);
+router.put('/follow/:id',fetchUser,userController.follow);
 router.get('/getfriends/:id',fetchUser,userController.getfriends);
 router.get('/getCurruser',fetchUser,userController.curruser);
 
