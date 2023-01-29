@@ -96,7 +96,7 @@ const Post = (props) => {
         </div>
         <div className="postCenter">
           <span className="postText">{post.content}</span>
-          <img className="postImg" src={PF + post.img} alt="" />
+          {/* <img className="postImg" src={PF + post.img} alt="" /> */}
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

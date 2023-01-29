@@ -1,13 +1,14 @@
-import React, { useEffect, useState ,useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import commentContext from '../../context/comments/commentContext';
+import "./commentItem.css";
 
-const CommentItem = ({comment}) => {
+const CommentItem = ({ comment }) => {
 
-    const contextcomment = useContext(commentContext);
-  const {deleteComment,likeComment} = contextcomment;
-  
+  const contextcomment = useContext(commentContext);
+  const { deleteComment, likeComment } = contextcomment;
+
   const PF = "assests/img/"
   const url = 'http://localhost:5000';
   const [user, setuser] = useState({})
@@ -31,7 +32,7 @@ const CommentItem = ({comment}) => {
     getUser();
     setlike(comment.likes.length);
     //eslint-disable-next-line
-  }, [comment.user,comment.likes])
+  }, [comment.user, comment.likes])
 
   useEffect(() => {
     const getCurruser = async () => {
@@ -62,8 +63,11 @@ const CommentItem = ({comment}) => {
     e.preventDefault();
     deleteComment(comment._id);
   }
-    return (
-        <div className="comment">
+  return (
+    <div className="post">
+      <div className="postWrapper">
+        <div className="postTop">
+          <div className="postTopLeft">
             <Link to={`/profile/${user._id}`}>
               <img
                 className="postProfileImg"
@@ -75,13 +79,23 @@ const CommentItem = ({comment}) => {
                 alt=""
               />
             </Link>
-            <div className="info">
-                <span>{user.name}</span>
-                <p>{comment.content}</p>
+            <span className="postUsername">{user.name}</span>
+            <span className="postDate">{format(comment.createdAt)}</span>
+          </div>
+          <div className="postTopRight">
+            {curruser._id === comment.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
+            <div className="dropdown">
+              <ul className="dropdown-menu">
+                <li><a className="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
+              </ul>
             </div>
-            <span className="date">
-                {format(comment.createdAt)}
-            </span>
+          </div>
+        </div>
+        <div className="postCenter">
+          <span className="postText">{comment.content}</span>
+        </div>
+        <div className="postBottom">
+          <div className="postBottomLeft">
             <img
               className="likeIcon"
               src={`${PF}like.png`}
@@ -89,14 +103,46 @@ const CommentItem = ({comment}) => {
               alt=""
             />
             <span className="postLikeCounter">{like} people like it</span>
-            {curruser._id === comment.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
-            <div className="dropdown">
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
-              </ul>
-            </div>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+    
+     
+    // <div className="comment">
+    //   <Link to={`/profile/${user._id}`}>
+    //     <img
+    //       className="postProfileImg"
+    //       src={
+    //         user.profilePicture
+    //           ? PF + user.profilePicture
+    //           : PF + "noAvatar.png"
+    //       }
+    //       alt=""
+    //     />
+    //   </Link>
+    //   <div className="info">
+    //     <span>{user.name}</span>
+    //     <p>{comment.content}</p>
+    //   </div>
+    //   <span className="date">
+    //     {format(comment.createdAt)}
+    //   </span>
+    //   <img
+    //     className="likeIcon"
+    //     src={`${PF}like.png`}
+    //     onClick={likeHandler}
+    //     alt=""
+    //   />
+    //   <span className="postLikeCounter">{like} people like it</span>
+    //   {curruser._id === comment.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
+    //   <div className="dropdown">
+    //     <ul className="dropdown-menu">
+    //       <li><a className="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
+    //     </ul>
+    //   </div>
+    // </div>
+  )
 }
 
 export default CommentItem
