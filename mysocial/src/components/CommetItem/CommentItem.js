@@ -1,16 +1,12 @@
 import React, { useEffect, useState ,useContext } from 'react'
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import postContext from '../../context/posts/postContext';
+import commentContext from '../../context/comments/commentContext';
 
-import "./post.css"
-import Comment from '../Comment/Comment';
-const Post = (props) => {
-  let { post } = props;
+const CommentItem = ({comment}) => {
 
-  const [commentOpen, setCommentOpen] = useState(false);
-  const contextpost = useContext(postContext);
-  const {deletePost,likePost} = contextpost;
+    const contextcomment = useContext(commentContext);
+  const {deleteComment,likeComment} = contextcomment;
   
   const PF = "assests/img/"
   const url = 'http://localhost:5000';
@@ -22,7 +18,7 @@ const Post = (props) => {
 
   useEffect(() => {
     const getUser = async () => {
-      const response = await fetch(`${url}/api/user/getUser/${post.user}`, {
+      const response = await fetch(`${url}/api/user/getUser/${comment.user}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -33,9 +29,9 @@ const Post = (props) => {
       setuser(json);
     }
     getUser();
-    setlike(post.likes.length);
+    setlike(comment.likes.length);
     //eslint-disable-next-line
-  }, [post.user,post.likes])
+  }, [comment.user,comment.likes])
 
   useEffect(() => {
     const getCurruser = async () => {
@@ -48,29 +44,26 @@ const Post = (props) => {
         },
       });
       const json = await response.json();
-      setisliked(post.likes.includes(json._id));
+      setisliked(comment.likes.includes(json._id));
       setcurruser(json);
 
     }
     getCurruser();
     //eslint-disable-next-line
-  }, [curruser._id, post.likes])
+  }, [curruser._id, comment.likes])
 
   const likeHandler = () => {
-    likePost(post._id);
+    likeComment(comment._id);
     setlike(isliked ? like - 1 : like + 1);
     setisliked(!isliked);
   }
 
   const handleDelete = (e) => {
     e.preventDefault();
-    deletePost(post._id);
+    deleteComment(comment._id);
   }
-  return (
-    <div className="post">
-      <div className="postWrapper">
-        <div className="postTop">
-          <div className="postTopLeft">
+    return (
+        <div className="comment">
             <Link to={`/profile/${user._id}`}>
               <img
                 className="postProfileImg"
@@ -82,24 +75,13 @@ const Post = (props) => {
                 alt=""
               />
             </Link>
-            <span className="postUsername">{user.name}</span>
-            <span className="postDate">{format(post.createdAt)}</span>
-          </div>
-          <div className="postTopRight">
-            {curruser._id === post.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
-            <div className="dropdown">
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
-              </ul>
+            <div className="info">
+                <span>{user.name}</span>
+                <p>{comment.content}</p>
             </div>
-          </div>
-        </div>
-        <div className="postCenter">
-          <span className="postText">{post.content}</span>
-          <img className="postImg" src={PF + post.img} alt="" />
-        </div>
-        <div className="postBottom">
-          <div className="postBottomLeft">
+            <span className="date">
+                {format(comment.createdAt)}
+            </span>
             <img
               className="likeIcon"
               src={`${PF}like.png`}
@@ -107,15 +89,14 @@ const Post = (props) => {
               alt=""
             />
             <span className="postLikeCounter">{like} people like it</span>
-          </div>
-          <div className="postBottomRight">
-            <span className="postCommentText" onClick={() => setCommentOpen(!commentOpen)} >See comments</span>
-          </div>
+            {curruser._id === comment.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
+            <div className="dropdown">
+              <ul className="dropdown-menu">
+                <li><a className="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
+              </ul>
+            </div>
         </div>
-        {commentOpen && <Comment postId={post._id} />}
-      </div>
-    </div>
-  )
+    )
 }
 
-export default Post
+export default CommentItem

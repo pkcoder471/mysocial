@@ -6,6 +6,6 @@ const fetchUser = require('../middlewares/fetchuser');
 router.post('/create/:id',fetchUser,commentController.createcomment);
 router.delete('/delete/:id',fetchUser,commentController.deletecomment);
 router.get('/getall/:id',fetchUser,commentController.getallcomment);
-router.post('/like/:id',fetchUser,commentController.like);
+router.put('/like/:id',fetchUser,commentController.like);
 
 module.exports = router;
