@@ -36,11 +36,11 @@ const Comment = ({ postId }) => {
         setcomment({ ...comment, [e.target.name]: e.target.value });
     }
     return (
-        <div className="share">
-            <div className="shareWrapper">
-                <div className="shareTop">
+        <div className="commentshare">
+            <div className="commentshareWrapper">
+                <div className="commentshareTop">
                     <img
-                        className="shareProfileImg"
+                        className="commentshareProfileImg"
                         src={
                             curruser.profilePicture
                                 ? PF + curruser.profilePicture
@@ -49,46 +49,22 @@ const Comment = ({ postId }) => {
                         alt=""
                     />
                     <input
-                        placeholder={"What's in your mind " + curruser.name + "?"}
-                        className="shareInput"
-                        name="caption"
+                        placeholder="Add a comment..."
+                        className="commentshareInput"
+                        name="content"
                         value={comment.content}
                         onChange={onChange}
-                        
+
                     />
-                    <button className="shareButton" type="submit" onClick={handleClick}>Share</button>
+                    <button className="commentshareButton" type="submit" onClick={handleClick} >post</button>
 
                 </div>
                 {comments.map((comment) => {
-                        return <CommentItem comment={comment} key={comment._id} />
-                    })}
-                </div>
+                    return <CommentItem comment={comment} key={comment._id} />
+                })}
             </div>
-                /* <div className="comments">
-                    <div className="write">
-                        <img
-                            className="shareProfileImg"
-                            src={
-                                curruser.profilePicture
-                                    ? PF + curruser.profilePicture
-                                    : PF + "noAvatar.png"
-                            }
-                            alt=""
-                        />
-                        <input
-                            type="text"
-                            placeholder="write a comment"
-                            value={comment.content}
-                            name="content"
-                            onChange={onChange}
-                        />
-                        <button className="shareButton" type="submit" onClick={handleClick}>Share</button>
-                    </div>
-                    {comments.map((comment) => {
-                        return <CommentItem comment={comment} key={comment._id} />
-                    })}
-                </div> */
-                )
+        </div>
+    )
 }
 
 export default Comment

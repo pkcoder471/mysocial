@@ -6,7 +6,7 @@ const Rightbar = () => {
 
         return (
           <>
-            <img className="rightbarAd" src="assests/img/ad.png" alt="" />
+            <img className="rightbarAd" src="assests/img/social.webp" alt="" />
             <h4 className="rightbarTitle">Online Friends</h4>
             {/* <ul className="rightbarFriendList">
               {Users.map((u) => (

@@ -1,3 +1,81 @@
-.postLikeCounter{
-    font-size: 15px;
-}
+i{
+    cursor: pointer;
+  }
+  .comment {
+      width: 100%;
+      border-radius: 10px;
+      /* -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+      box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68); */
+      margin: 30px 0;
+    }
+    
+    .commentWrapper {
+      padding: 0px;
+    }
+    
+    .commentTop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .commentTopLeft {
+      display: flex;
+      align-items: center;
+    }
+    
+    .commentProfileImg {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .commentUsername {
+      font-size: 15px;
+      font-weight: 500;
+      margin: 0 10px;
+    }
+    
+    .commentDate{
+        font-size: 12px;
+    }
+    
+    .commentCenter{
+        margin: 10px 0;
+    }
+    
+    .commentImg{
+        margin-top: 20px;
+        width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+    }
+    
+    .commentBottom{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .commentBottomLeft{
+        display: flex;
+        align-items: center;   
+    }
+    
+    .likeIcon{
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    
+    .commentLikeCounter{
+        font-size: 13px;
+    }
+    
+    .commentText{
+        font-size: 15px;
+    }
+  
+    

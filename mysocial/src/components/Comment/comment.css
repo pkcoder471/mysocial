@@ -1,0 +1,44 @@
+.commentshare {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+    /* -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+    box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68); */
+  }
+  
+  .commentshareWrapper {
+    padding: 7px;
+  }
+  
+  .commentshareTop {
+    display: flex;
+    align-items: center;
+  }
+  
+  .commentshareProfileImg {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .commentshareInput {
+    border: none;
+    width: 80%;
+  }
+  
+  .commentshareInput:focus {
+    outline: none;
+  }
+  
+  .commentshareButton{
+      border: none;
+      padding: 7px;
+      border-radius: 10px;
+      background-color: green;
+      font-weight: 500;
+      margin-right: 20px;
+      cursor: pointer;
+      color: white;
+  }

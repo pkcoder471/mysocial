@@ -64,13 +64,13 @@ const CommentItem = ({ comment }) => {
     deleteComment(comment._id);
   }
   return (
-    <div className="post">
-      <div className="postWrapper">
-        <div className="postTop">
-          <div className="postTopLeft">
+    <div className="comment">
+      <div className="commentWrapper">
+        <div className="commentTop">
+          <div className="commentTopLeft">
             <Link to={`/profile/${user._id}`}>
               <img
-                className="postProfileImg"
+                className="commentProfileImg"
                 src={
                   user.profilePicture
                     ? PF + user.profilePicture
@@ -79,10 +79,10 @@ const CommentItem = ({ comment }) => {
                 alt=""
               />
             </Link>
-            <span className="postUsername">{user.name}</span>
-            <span className="postDate">{format(comment.createdAt)}</span>
+            <span className="commentUsername">{user.name}</span>
+            <span className="commentDate">{format(comment.createdAt)}</span>
           </div>
-          <div className="postTopRight">
+          <div className="commentTopRight">
             {curruser._id === comment.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
             <div className="dropdown">
               <ul className="dropdown-menu">
@@ -91,18 +91,18 @@ const CommentItem = ({ comment }) => {
             </div>
           </div>
         </div>
-        <div className="postCenter">
-          <span className="postText">{comment.content}</span>
+        <div className="commentCenter">
+          <span className="commentText">{comment.content}</span>
         </div>
-        <div className="postBottom">
-          <div className="postBottomLeft">
+        <div className="commentBottom">
+          <div className="commentBottomLeft">
             <img
               className="likeIcon"
               src={`${PF}like.png`}
               onClick={likeHandler}
               alt=""
             />
-            <span className="postLikeCounter">{like} people like it</span>
+            <span className="commentLikeCounter">{like} people like it</span>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@ const CommentItem = ({ comment }) => {
     // <div className="comment">
     //   <Link to={`/profile/${user._id}`}>
     //     <img
-    //       className="postProfileImg"
+    //       className="commentProfileImg"
     //       src={
     //         user.profilePicture
     //           ? PF + user.profilePicture
@@ -134,7 +134,7 @@ const CommentItem = ({ comment }) => {
     //     onClick={likeHandler}
     //     alt=""
     //   />
-    //   <span className="postLikeCounter">{like} people like it</span>
+    //   <span className="commentLikeCounter">{like} people like it</span>
     //   {curruser._id === comment.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
     //   <div className="dropdown">
     //     <ul className="dropdown-menu">
