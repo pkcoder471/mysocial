@@ -32,14 +32,14 @@ const PostState = (props) =>{
         setposts(json);
     }
 
-    const addPost = async (content) =>{
+    const addPost = async (content,img) =>{
         const response = await fetch(`${url}/api/post/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': localStorage.getItem('token') 
             },
-            body: JSON.stringify({content})
+            body: JSON.stringify({content,img})
         });
         const json = await response.json();
         console.log(json);

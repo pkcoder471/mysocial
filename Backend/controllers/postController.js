@@ -37,7 +37,8 @@ module.exports.create = async (req,res) =>{
     try {
         let post = await Post.create({
             content:req.body.content,
-            user:req.user.id
+            user:req.user.id,
+            img:req.body.img
         })
 
         res.json(post);

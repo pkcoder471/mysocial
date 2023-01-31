@@ -10,6 +10,9 @@ const postSchema = new Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'user'
     },
+    img:{
+        type:String
+    },
     likes: [
         {
             type:mongoose.Schema.Types.ObjectId,
