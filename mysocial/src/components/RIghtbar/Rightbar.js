@@ -1,12 +1,13 @@
 import React from 'react'
 import "./rightbar.css"
 const Rightbar = () => {
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     const HomeRightbar = () => {
 
         return (
           <>
-            <img className="rightbarAd" src="assests/img/social.webp" alt="" />
+            <img className="rightbarAd" src={PF+"social.webp"} alt="" />
             <h4 className="rightbarTitle">Online Friends</h4>
             {/* <ul className="rightbarFriendList">
               {Users.map((u) => (

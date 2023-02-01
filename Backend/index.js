@@ -8,12 +8,13 @@ connectTOMongo();
 
 const app = express();
 port = 5000;
-//it will direct me to my img folder
+//it will redirect me to my img folder
 app.use('/img',express.static(path.join(__dirname,"public/img")));
 
+const dest = path.join(__dirname,"public/img");
 const storage = multer.diskStorage({
     destination:(req,file,cb)=>{
-        cb(null,"public/img")
+        cb(null,dest);
     },
     filename:(req,file,cb)=>{
         cb(null,req.body.name);

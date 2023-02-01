@@ -2,7 +2,6 @@ import React, { useEffect, useState ,useContext } from 'react'
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import postContext from '../../context/posts/postContext';
-
 import "./post.css"
 import Comment from '../Comment/Comment';
 const Post = (props) => {
@@ -12,7 +11,7 @@ const Post = (props) => {
   const contextpost = useContext(postContext);
   const {deletePost,likePost} = contextpost;
   
-  const PF = "assests/img/"
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const url = 'http://localhost:5000';
   const [user, setuser] = useState({})
   const [curruser, setcurruser] = useState({})
@@ -96,7 +95,7 @@ const Post = (props) => {
         </div>
         <div className="postCenter">
           <span className="postText">{post.content}</span>
-          {/* <img className="postImg" src={PF + post.img} alt="" /> */}
+          <img className="postImg" src={PF + post.img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

@@ -23,11 +23,11 @@ const Addpost = () => {
     const submitHandler = async (e) =>{
         e.preventDefault();
         if(file){
-        const filename = Date.now() + file.name;
+        const fileName = Date.now() + file.name;
         const data = new FormData();
+        data.append("name",fileName);
         data.append("file",file);
-        data.append("name",filename);
-        post.img = filename;
+        post.img = fileName;
         try {
           const response = await fetch(`${url}/api/upload`, {
             method: 'POST',
@@ -48,6 +48,7 @@ const Addpost = () => {
         addPost(post.caption,post.img);
         }
         setpost({caption:"",img:""});
+        setfile(null);
 
     }
 
@@ -77,17 +78,16 @@ const Addpost = () => {
           />
         </div>
         <hr className="shareHr" />
-        {/* {file && (
+        {file && (
           <div className="shareImgContainer">
             <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
-            <Cancel className="shareCancelImg" onClick={() => setFile(null)} />
+            <i className="fa-solid fa-xmark" onClick={() => setfile(null)}  ></i>
           </div>
-        )} */}
+        )}
         <form className="shareBottom" onSubmit={submitHandler}>
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
-            <i class="fa-solid fa-photo-film" htmlColor="tomato"></i>
-              {/* <PermMedia htmlColor="tomato" className="shareIcon" /> */}
+            <i className="fa-solid fa-photo-film"></i>
               <span className="shareOptionText">Photo or Video</span>
               <input
                 style={{ display: "none" }}
