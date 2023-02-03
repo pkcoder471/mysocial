@@ -5,15 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Rightbar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const context = useContext(userContext);
-  const { getFriends, Friends } = context;
 
-
-  useEffect(() => {
-      getFriends(user._id)
-
-    //eslint-disable-next-line
-  }, [user])
 
   const HomeRightbar = () => {
 
@@ -31,6 +23,15 @@ const Rightbar = ({ user }) => {
   };
 
   const ProfileRightbar = () => {
+    const context = useContext(userContext);
+    const { getFriends, Friends } = context;
+
+
+    useEffect(() => {
+      getFriends(user._id)
+
+      //eslint-disable-next-line
+    }, [user])
     return (
       <>
         {/* {user.username !== currentUser.username && (

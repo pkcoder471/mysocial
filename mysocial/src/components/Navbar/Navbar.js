@@ -4,7 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const Navbar = () => {
 
-    const PF = "assests/img/"
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     const url = 'http://localhost:5000';
     const [curruser, setcurruser] = useState({})
     const navigate = useNavigate();
@@ -49,7 +50,9 @@ const Navbar = () => {
             </div>
             <div className="topbarRight">
                 <div className="topbarLinks">
-                    <span className="topbarLink">Homepage</span>
+                <span className="topbarLink"><Link to='/'>Homepage</Link></span>
+
+                    {/* <span className="topbarLink">Homepage</span> */}
                 </div>
                 <div className="topbarIcons">
                     <div className="topbarIconItem">

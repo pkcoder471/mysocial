@@ -100,3 +100,8 @@
   .rightbarFollowButton:focus{
     outline: none;
   }
+
+  .rightbarFollowingName{
+    color: black;
+    text-align: center;
+  }

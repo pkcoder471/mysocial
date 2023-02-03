@@ -4,7 +4,8 @@ import postContext from '../../context/posts/postContext';
 import "./addpost.css"
 
 const Addpost = () => {
-    const PF="assests/img/";
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     const url = 'http://localhost:5000';
 
     const contextuser = useContext(userContext);

@@ -60,6 +60,9 @@ const PostState = (props) =>{
         const newPosts = posts.concat(json);
         newPosts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
         setposts(newPosts);
+        const newuserPosts = userposts.concat(json);
+        newuserPosts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+        setuserposts(newuserPosts);
     }
 
     const deletePost = async (id) =>{
