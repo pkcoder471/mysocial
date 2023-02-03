@@ -74,7 +74,7 @@ const Navbar = () => {
                 />
                 <div className="dropdown">
                     <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="/">Profile</a></li>
+                        <li><Link to={`/profile/${curruser._id}`} className="dropdown-item">Profile</Link></li>
                         <li><a className="dropdown-item" href="/" onClick={handleLogout}>Logout</a></li>
                     </ul>
                 </div>

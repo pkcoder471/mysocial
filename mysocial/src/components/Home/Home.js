@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect , useState } from 'react'
 import {useNavigate } from 'react-router-dom'
 import Feed from '../Feed/Feed';
 import Navbar from '../Navbar/Navbar'
@@ -22,13 +22,33 @@ const Home = () => {
     //eslint-disable-next-line
   }, [])
 
+  const url = 'http://localhost:5000';
+  const [curruser, setcurruser] = useState({})
+
+  useEffect(() => {
+    const getCurruser = async () => {
+
+      const response = await fetch(`${url}/api/user/getCurruser`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token')
+        },
+      });
+      const json = await response.json();
+      setcurruser(json);
+
+    }
+    getCurruser();
+    //eslint-disable-next-line
+  }, [])
 
   return (
     <>
       <Navbar />
       <div className="homeContainer">
         <Sidebar />
-        <Feed posts={posts}/>
+        <Feed posts={posts} id={curruser._id}/>
         <Rightbar/>
       </div>
     </>

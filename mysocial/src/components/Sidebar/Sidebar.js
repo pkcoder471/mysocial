@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect} from 'react'
 import CloseFriend from '../CloseFriend/CloseFriend';
 import userContext from '../../context/users/userContext';
 
@@ -6,7 +6,7 @@ import "./sidebar.css";
 
 const Sidebar = () => {
     const context = useContext(userContext);
-    const { getFriends, Users } = context;
+    const { getFriends, Friends } = context;
 
     const url = 'http://localhost:5000';
 
@@ -60,7 +60,7 @@ const Sidebar = () => {
                 </ul>
                 <hr className="sidebarHr" />
                 <ul className="sidebarFriendList">
-                    {Users.map((u) => {
+                    {Friends.map((u) => {
                         return <CloseFriend key={u._id} user={u} />
                     })}
                 </ul>

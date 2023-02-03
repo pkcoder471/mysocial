@@ -3,7 +3,7 @@ import { useState } from "react";
 const UserState = (props) => {
    
     const url = 'http://localhost:5000';
-    const [Users, setUsers] = useState([])
+    const [Friends, setFriends] = useState([])
     const [curruser, setcurruser] = useState({})
 
     const getFriends = async (id) => {
@@ -15,7 +15,7 @@ const UserState = (props) => {
             },
         });
         const json = await response.json();
-        setUsers(json);
+        setFriends(json);
     }
 
     const getCurruser = async () => {
@@ -31,9 +31,10 @@ const UserState = (props) => {
         setcurruser(json);
 
     }
+    
 
     return (
-        <UserContext.Provider value={{ getFriends,Users,getCurruser,curruser}}>
+        <UserContext.Provider value={{ getFriends,Friends,getCurruser,curruser}}>
             {props.children}
         </UserContext.Provider>
     )

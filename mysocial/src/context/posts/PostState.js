@@ -6,6 +6,7 @@ const PostState = (props) =>{
     const url = 'http://localhost:5000';
     const postInitial = [];
     const [posts, setposts] = useState(postInitial);
+    const [userposts, setuserposts] = useState(postInitial);
 
     const likePost = async (id) =>{
         const response = await fetch(`${url}/api/post/like/${id}`, {
@@ -30,6 +31,19 @@ const PostState = (props) =>{
         const json = await response.json();
         json.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
         setposts(json);
+    }
+    const getPostsofUser = async (id) =>{
+        const response = await fetch(`${url}/api/post/getposts/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
+            },
+            
+        });
+        const json = await response.json();
+        json.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+        setuserposts(json);
     }
 
     const addPost = async (content,img) =>{
@@ -68,7 +82,7 @@ const PostState = (props) =>{
     }
     
     return(
-        <postContext.Provider value={{likePost,getPosts,posts,addPost,deletePost}}>
+        <postContext.Provider value={{likePost,getPosts,posts,addPost,deletePost,getPostsofUser,userposts}}>
             {props.children}
         </postContext.Provider>
     )
