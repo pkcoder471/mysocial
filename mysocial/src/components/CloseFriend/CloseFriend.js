@@ -16,8 +16,10 @@ const CloseFriend = ({ user }) => {
                     }
                     alt=""
                 />
+                <span className="sidebarFriendName">{user.name}</span>
             </Link>
-            <span className="sidebarFriendName">{user.name}</span>
+            
+            
         </li>
     )
 }

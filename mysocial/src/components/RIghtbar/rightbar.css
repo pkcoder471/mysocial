@@ -65,13 +65,14 @@
   .rightbarFollowings{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    
   }
   
   .rightbarFollowing{
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+    margin-left: 20px;
     cursor: pointer;
   }
   

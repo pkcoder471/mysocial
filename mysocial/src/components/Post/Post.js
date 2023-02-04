@@ -80,8 +80,9 @@ const Post = (props) => {
                 }
                 alt=""
               />
+              <span className="postUsername">{user.name}</span>
             </Link>
-            <span className="postUsername">{user.name}</span>
+            
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">

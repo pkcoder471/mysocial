@@ -79,8 +79,9 @@ const CommentItem = ({ comment }) => {
                 }
                 alt=""
               />
+              <span className="commentUsername">{user.name}</span>
             </Link>
-            <span className="commentUsername">{user.name}</span>
+            
             <span className="commentDate">{format(comment.createdAt)}</span>
           </div>
           <div className="commentTopRight">
@@ -108,41 +109,6 @@ const CommentItem = ({ comment }) => {
         </div>
       </div>
     </div>
-    
-     
-    // <div className="comment">
-    //   <Link to={`/profile/${user._id}`}>
-    //     <img
-    //       className="commentProfileImg"
-    //       src={
-    //         user.profilePicture
-    //           ? PF + user.profilePicture
-    //           : PF + "noAvatar.png"
-    //       }
-    //       alt=""
-    //     />
-    //   </Link>
-    //   <div className="info">
-    //     <span>{user.name}</span>
-    //     <p>{comment.content}</p>
-    //   </div>
-    //   <span className="date">
-    //     {format(comment.createdAt)}
-    //   </span>
-    //   <img
-    //     className="likeIcon"
-    //     src={`${PF}like.png`}
-    //     onClick={likeHandler}
-    //     alt=""
-    //   />
-    //   <span className="commentLikeCounter">{like} people like it</span>
-    //   {curruser._id === comment.user && <i className="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>}
-    //   <div className="dropdown">
-    //     <ul className="dropdown-menu">
-    //       <li><a className="dropdown-item" href="/" onClick={handleDelete}>Delete</a></li>
-    //     </ul>
-    //   </div>
-    // </div>
   )
 }
 

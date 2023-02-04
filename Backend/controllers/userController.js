@@ -144,6 +144,7 @@ module.exports.getUser = async (req,res)=>{
 }
 
 module.exports.follow = async (req,res)=>{
+    let follow = false;
     try {
         if(req.params.id===req.user.id){
             return res.status(403).json({error:"You can't follow yourself!"})
@@ -156,14 +157,15 @@ module.exports.follow = async (req,res)=>{
             await curruser.followings.push(req.params.id);
             user.save();
             curruser.save();
-            res.status(200).json({success:"you followed a user"});
+            follow = true;
+            res.status(200).json({follow,success:"you followed a user"});
         }
         else{
             await user.followers.pull(req.user.id);
             await curruser.followings.pull(req.params.id);
             user.save();
             curruser.save();
-            res.status(200).json({success:"you unfollowed a user"});
+            res.status(200).json({follow,success:"you unfollowed a user"});
 
         }
         

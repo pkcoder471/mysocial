@@ -1,7 +1,10 @@
 .feed{
     flex:5.5
 }
-
+.no-posts{
+    margin-top: 20px;
+    width: 100%;
+}
 .feedWrapper{
     padding: 20px;
 }

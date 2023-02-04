@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./rightbar.css"
 import userContext from '../../context/users/userContext';
 import { Link } from 'react-router-dom';
 
 const Rightbar = ({ user }) => {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const url = 'http://localhost:5000';
 
   const HomeRightbar = () => {
 
@@ -22,24 +23,53 @@ const Rightbar = ({ user }) => {
     );
   };
 
-  const ProfileRightbar = () => {
+  const ProfileRightbar = ({ user }) => {
+
+    const [curruser, setcurruser] = useState({})
+    const [isfollowed, setisfollowed] = useState(false);
     const context = useContext(userContext);
-    const { getuserFriends, userFriends } = context;
+    const { getuserFriends, userFriends, followuser } = context;
 
 
     useEffect(() => {
       getuserFriends(user._id)
-
       //eslint-disable-next-line
     }, [user])
+
+    useEffect(() => {
+      const getCurruser = async () => {
+
+        const response = await fetch(`${url}/api/user/getCurruser`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('token')
+          },
+        });
+        const json = await response.json();
+        if (json.followings.includes(user._id)) {
+          setisfollowed(true);
+        }
+        setcurruser(json);
+
+      }
+      getCurruser();
+      //eslint-disable-next-line
+    }, [curruser._id, user.followings])
+
+    const handleClick = (e) =>{
+      e.preventDefault();
+      followuser(user);
+      setisfollowed(!isfollowed);
+    }
+
     return (
       <>
-        {/* {user.username !== currentUser.username && (
-                    <button className="rightbarFollowButton" onClick={handleClick}>
-                        {followed ? "Unfollow" : "Follow"}
-                        {followed ? <Remove /> : <Add />}
-                    </button>
-                )} */}
+        {user._id !== curruser._id && (
+          <button className="rightbarFollowButton" onClick={handleClick}>
+            {isfollowed ? "Unfollow" : "Follow"}
+          </button>
+        )}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
@@ -63,7 +93,7 @@ const Rightbar = ({ user }) => {
         </div>
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
-          {userFriends.map((friend) => (
+          {userFriends.length === 0 ? <h4 style={{ color: "gray" }}>No friends...</h4> : userFriends.map((friend) => (
             <Link
               to={"/profile/" + friend._id}
               style={{ textDecoration: "none" }}
@@ -89,7 +119,7 @@ const Rightbar = ({ user }) => {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {user ? <ProfileRightbar /> : <HomeRightbar />}
+        {user ? <ProfileRightbar user={user} /> : <HomeRightbar />}
       </div>
     </div>
   )
