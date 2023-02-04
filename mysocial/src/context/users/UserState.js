@@ -4,6 +4,7 @@ const UserState = (props) => {
    
     const url = 'http://localhost:5000';
     const [Friends, setFriends] = useState([])
+    const [userFriends, setuserFriends] = useState([])
     const [curruser, setcurruser] = useState({})
 
     const getFriends = async (id) => {
@@ -16,6 +17,18 @@ const UserState = (props) => {
         });
         const json = await response.json();
         setFriends(json);
+    }
+
+    const getuserFriends = async (id) => {
+        const response = await fetch(`${url}/api/user/getfriends/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
+            },
+        });
+        const json = await response.json();
+        setuserFriends(json);
     }
 
     const getCurruser = async () => {
@@ -34,7 +47,7 @@ const UserState = (props) => {
     
 
     return (
-        <UserContext.Provider value={{ getFriends,Friends,getCurruser,curruser}}>
+        <UserContext.Provider value={{ getFriends,Friends,getuserFriends,userFriends,getCurruser,curruser}}>
             {props.children}
         </UserContext.Provider>
     )

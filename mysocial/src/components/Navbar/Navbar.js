@@ -50,7 +50,7 @@ const Navbar = () => {
             </div>
             <div className="topbarRight">
                 <div className="topbarLinks">
-                <span className="topbarLink"><Link to='/'>Homepage</Link></span>
+                <Link to='/'><span className="topbarLink">Homepage</span></Link>
 
                     {/* <span className="topbarLink">Homepage</span> */}
                 </div>

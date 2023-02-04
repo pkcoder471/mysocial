@@ -9,7 +9,8 @@ const CommentItem = ({ comment }) => {
   const contextcomment = useContext(commentContext);
   const { deleteComment, likeComment } = contextcomment;
 
-  const PF = "assests/img/"
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   const url = 'http://localhost:5000';
   const [user, setuser] = useState({})
   const [curruser, setcurruser] = useState({})

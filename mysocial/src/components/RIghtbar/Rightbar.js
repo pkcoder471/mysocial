@@ -24,11 +24,11 @@ const Rightbar = ({ user }) => {
 
   const ProfileRightbar = () => {
     const context = useContext(userContext);
-    const { getFriends, Friends } = context;
+    const { getuserFriends, userFriends } = context;
 
 
     useEffect(() => {
-      getFriends(user._id)
+      getuserFriends(user._id)
 
       //eslint-disable-next-line
     }, [user])
@@ -63,7 +63,7 @@ const Rightbar = ({ user }) => {
         </div>
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
-          {Friends.map((friend) => (
+          {userFriends.map((friend) => (
             <Link
               to={"/profile/" + friend._id}
               style={{ textDecoration: "none" }}

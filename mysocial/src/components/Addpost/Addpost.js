@@ -89,7 +89,7 @@ const Addpost = () => {
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
             <i className="fa-solid fa-photo-film"></i>
-              <span className="shareOptionText">Photo or Video</span>
+              <span className="shareOptionText">Add Photo</span>
               <input
                 style={{ display: "none" }}
                 type="file"

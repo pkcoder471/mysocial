@@ -25,6 +25,7 @@
   
   .commentshareInput {
     border: none;
+    border-bottom: 2px solid lightgray;
     width: 80%;
   }
   
@@ -34,11 +35,12 @@
   
   .commentshareButton{
       border: none;
-      padding: 7px;
-      border-radius: 10px;
+      padding: 9px;
+      border-radius: 8px;
       background-color: green;
       font-weight: 500;
       margin-right: 20px;
       cursor: pointer;
       color: white;
+      margin-left: 20px
   }

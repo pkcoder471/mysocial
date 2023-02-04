@@ -8,7 +8,7 @@ const Comment = ({ postId }) => {
     const context = useContext(commentContext);
 
     const { fetchAllComments, comments, addComment } = context;
-    const PF = "assests/img/";
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     const contextuser = useContext(userContext);
 
@@ -56,7 +56,7 @@ const Comment = ({ postId }) => {
                         onChange={onChange}
 
                     />
-                    <button className="commentshareButton" type="submit" onClick={handleClick} >post</button>
+                    <button className="commentshareButton" type="submit" onClick={handleClick} >Post</button>
 
                 </div>
                 {comments.map((comment) => {
