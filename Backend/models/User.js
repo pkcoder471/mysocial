@@ -19,6 +19,22 @@ const userSchema = new Schema({
          type:String,
          default:""
      },
+     city:{
+         type:String,
+         default:""
+     },
+     relationship:{
+         type:String,
+         default:""
+     },
+     profilePic:{
+         type:String,
+         default:""
+     },
+     coverPic:{
+         type:String,
+         default:""
+     },
      followers: [
          {
             type:mongoose.Schema.Types.ObjectId,

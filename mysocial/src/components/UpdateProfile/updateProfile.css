@@ -26,7 +26,7 @@
       position: relative;
 }
 
-.update .wrapper h1 {
+.update .wrapper h3 {
         color: lightgrey;
       
       }
@@ -55,9 +55,11 @@
             position: relative;
 }
 .update .wrapper form label .imgContainer img {
-              width: 100px;
-              height: 100px;
+              width: 70px;
+              height: 70px;
               object-fit: cover;
+              cursor: pointer;
+
             }
 .update .wrapper form label .imgContainer .icon {
               position: absolute;
@@ -65,8 +67,8 @@
               bottom: 0;
               left: 0;
               right: 0;
-              margin: auto;
               font-size: 30px;
+              align-items: center;
               color: lightgray;
               cursor: pointer;
             }
@@ -74,6 +76,7 @@
 .update .wrapper form input {
           padding: 5px;
           border: none;
+          margin-top: -15px;
           border-bottom: 1px solid gray;
           color: gray;
           background-color: transparent;

@@ -101,8 +101,8 @@ const Rightbar = ({ user }) => {
               <div className="rightbarFollowing">
                 <img
                   src={
-                    friend.profilePicture
-                      ? PF + friend.profilePicture
+                    friend.profilePic
+                      ? PF + friend.profilePic
                       : PF + "noAvatar.png"
                   }
                   alt=""

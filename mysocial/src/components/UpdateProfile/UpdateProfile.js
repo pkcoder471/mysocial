@@ -1,28 +1,87 @@
-import React,{useState} from 'react'
+import React,{useState ,useContext} from 'react'
+import { useNavigate } from 'react-router-dom';
+import userContext from '../../context/users/userContext';
 import "./updateProfile.css";
+
 const UpdateProfile = (props) => {
-    const { curruser, setupdateOpen } = props;
+    const navigate = useNavigate();
+    const { curruser, setupdateOpen  } = props;
+    const context = useContext(userContext);
+    const {updateUser} = context;
     const [Cover, setCover] = useState(null)
     const [Profile, setProfile] = useState(null)
     const [texts, setTexts] = useState({
         name: curruser.name,
         about: curruser.about,
         city: curruser.city,
-        from: curruser.from,
         relationship: curruser.relationship,
-        
+        profilePic:curruser.profilePic,
+        coverPic:curruser.coverPic,
       });
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    const url = 'http://localhost:5000';
+
 
     const handleChange = (e) =>{
         setTexts({...texts,[e.target.name]:e.target.value});
+    }
+    const handleUpdate = async (e) =>{
+        e.preventDefault();
+        if(Cover){
+            const fileName = Date.now() + Cover.name;
+            console.log(fileName);
+            const data = new FormData();
+            data.append("name",fileName);
+            data.append("file",Cover);
+            texts.coverPic = fileName;
+            try {
+              const response = await fetch(`${url}/api/upload`, {
+                method: 'POST',
+                headers: {
+                    'auth-token': localStorage.getItem('token') 
+                },
+                body: data
+            });
+            const json = await response.json();
+            console.log(json);
+            } catch (err) {
+              console.log(err);
+            }
+        }
+        if(Profile){
+            const fileName = Date.now() + Profile.name;
+            console.log(fileName);
+            const data = new FormData();
+            data.append("name",fileName);
+            data.append("file",Profile);
+            texts.profilePic = fileName;
+            try {
+              const response = await fetch(`${url}/api/upload`, {
+                method: 'POST',
+                headers: {
+                    'auth-token': localStorage.getItem('token') 
+                },
+                body: data
+            });
+            const json = await response.json();
+            console.log(json);
+            } catch (err) {
+              console.log(err);
+            }
+        }
+        updateUser(curruser,texts.name,texts.about,texts.city,texts.relationship,texts.coverPic,texts.profilePic);
+        setupdateOpen(false);
+        setCover(null);
+        setProfile(null);
+        navigate(`/profile/${curruser._id}`)
+
     }
 
     return (
         <div>
             <div className="update">
                 <div className="wrapper">
-                    <h1>Update Your Profile</h1>
+                    <h3>Update Your Profile</h3>
                     <form>
                         <div className="files">
                             <label htmlFor="cover">
@@ -30,8 +89,10 @@ const UpdateProfile = (props) => {
                                 <div className="imgContainer">
                                     <img
                                         src={
-                                            curruser.coverPicture
-                                                ? PF + curruser.coverPicture
+                                            Cover
+                                                ? URL.createObjectURL(Cover)
+                                                : curruser.coverPic
+                                                ? PF + curruser.coverPic
                                                 : PF + "noCover.png"
                                         }
                                         alt=""
@@ -49,8 +110,10 @@ const UpdateProfile = (props) => {
                                 <div className="imgContainer">
                                     <img
                                         src={
-                                            curruser.profilePicture
-                                                ? PF + curruser.profilePicture
+                                            Profile
+                                                ? URL.createObjectURL(Profile)
+                                                : curruser.profilePic
+                                                ? PF + curruser.profilePic
                                                 : PF + "noAvatar.png"
                                         }
                                         alt=""
@@ -85,13 +148,6 @@ const UpdateProfile = (props) => {
                             name="city"
                             onChange={handleChange}
                         />
-                        <label>From</label>
-                        <input
-                            type="text"
-                            name="from"
-                            value={texts.from}
-                            onChange={handleChange}
-                        />
                         <label>Relationship</label>
                         <input
                             type="text"
@@ -99,7 +155,7 @@ const UpdateProfile = (props) => {
                             value={texts.relationship}
                             onChange={handleChange}
                         />
-                        <button >Update</button>
+                        <button onClick={handleUpdate}>Update</button>
                     </form>
                     <button className="close" onClick={() => setupdateOpen(false)}>
                         close

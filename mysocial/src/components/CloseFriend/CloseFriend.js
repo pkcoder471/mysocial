@@ -10,8 +10,8 @@ const CloseFriend = ({ user }) => {
                 <img
                     className="sidebarFriendImg"
                     src={
-                        user.profilePicture
-                            ? PF + user.profilePicture
+                        user.profilePic
+                            ? PF + user.profilePic
                             : PF + "noAvatar.png"
                     }
                     alt=""

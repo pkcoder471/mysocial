@@ -64,8 +64,8 @@ const Addpost = () => {
           <img
             className="shareProfileImg"
             src={
-              curruser.profilePicture
-                ? PF + curruser.profilePicture
+              curruser.profilePic
+                ? PF + curruser.profilePic
                 : PF + "noAvatar.png"
             }
             alt=""

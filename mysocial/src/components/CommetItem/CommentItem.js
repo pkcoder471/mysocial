@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import commentContext from '../../context/comments/commentContext';
 import "./commentItem.css";
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comments,setcomments,comment }) => {
 
   const contextcomment = useContext(commentContext);
   const { deleteComment, likeComment } = contextcomment;
@@ -62,7 +62,7 @@ const CommentItem = ({ comment }) => {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    deleteComment(comment._id);
+    deleteComment(comments,setcomments,comment._id);
   }
   return (
     <div className="comment">
@@ -73,8 +73,8 @@ const CommentItem = ({ comment }) => {
               <img
                 className="commentProfileImg"
                 src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
+                  user.profilePic
+                    ? PF + user.profilePic
                     : PF + "noAvatar.png"
                 }
                 alt=""

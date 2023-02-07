@@ -6,14 +6,17 @@ import "./comment.css";
 const Comment = ({ postId }) => {
 
     const context = useContext(commentContext);
+    const url = 'http://localhost:5000';
 
-    const { fetchAllComments, comments, addComment } = context;
+    const { addComment } = context;
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     const contextuser = useContext(userContext);
 
     const { getCurruser, curruser } = contextuser;
     const [comment, setcomment] = useState({ content: "" })
+    const [comments, setcomments] = useState([])
+
 
     useEffect(() => {
         getCurruser();
@@ -21,13 +24,27 @@ const Comment = ({ postId }) => {
     }, [])
 
     useEffect(() => {
-        fetchAllComments(postId);
+
+        const fetchAllComments = async (id) => {
+            const response = await fetch(`${url}/api/comment/getall/${postId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': localStorage.getItem('token')
+                },
+            });
+            const json = await response.json();
+            json.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+            console.log(json);
+            setcomments(json);
+        }
+        fetchAllComments();
         //eslint-disable-next-line
     }, [postId])
 
     const handleClick = async (e) => {
         e.preventDefault();
-        addComment(comment.content, postId);
+        addComment(setcomments,comments,comment.content, postId);
         setcomment({ content: "" });
 
     }
@@ -42,8 +59,8 @@ const Comment = ({ postId }) => {
                     <img
                         className="commentshareProfileImg"
                         src={
-                            curruser.profilePicture
-                                ? PF + curruser.profilePicture
+                            curruser.profilePic
+                                ? PF + curruser.profilePic
                                 : PF + "noAvatar.png"
                         }
                         alt=""
@@ -60,7 +77,7 @@ const Comment = ({ postId }) => {
 
                 </div>
                 {comments.map((comment) => {
-                    return <CommentItem comment={comment} key={comment._id} />
+                    return <CommentItem comments={comments} setcomments={setcomments} comment={comment} key={comment._id} />
                 })}
             </div>
         </div>

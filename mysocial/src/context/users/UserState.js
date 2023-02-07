@@ -26,6 +26,7 @@ const UserState = (props) => {
                 'Content-Type': 'application/json',
                 'auth-token': localStorage.getItem('token')
             },
+
         });
         const json = await response.json();
         setuserFriends(json);
@@ -52,6 +53,7 @@ const UserState = (props) => {
                 'Content-Type': 'application/json',
                 'auth-token': localStorage.getItem('token')
             },
+            
         });
         const json = await response.json();
         if (!json.follow) {
@@ -68,9 +70,26 @@ const UserState = (props) => {
 
     }
 
+    const updateUser = async (user,name,about,city,relationship,coverPic,profilePic) => {
+        console.log("hello");
+        const response = await fetch(`${url}/api/user/update/${user._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token')
+            },
+            body: JSON.stringify({name,about,city,relationship,coverPic,profilePic})
+
+        });
+        const json = await response.json();
+        // const newCurruser = {};
+        console.log(json);
+
+    }
+
 
     return (
-        <UserContext.Provider value={{ getFriends, Friends, getuserFriends, userFriends, getCurruser, curruser, followuser }}>
+        <UserContext.Provider value={{ getFriends, Friends, getuserFriends, userFriends, getCurruser, curruser, followuser,updateUser }}>
             {props.children}
         </UserContext.Provider>
     )

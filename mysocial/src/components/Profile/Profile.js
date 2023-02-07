@@ -70,8 +70,8 @@ const Profile = () => {
                                 <img
                                     className="profileCoverImg"
                                     src={
-                                        user.coverPicture
-                                            ? PF + user.coverPicture
+                                        user.coverPic
+                                            ? PF + user.coverPic
                                             : PF + "noCover.png"
                                     }
                                     alt=""
@@ -79,8 +79,8 @@ const Profile = () => {
                                 <img
                                     className="profileUserImg"
                                     src={
-                                        user.profilePicture
-                                            ? PF + user.profilePicture
+                                        user.profilePic
+                                            ? PF + user.profilePic
                                             : PF + "noAvatar.png"
                                     }
                                     alt=""

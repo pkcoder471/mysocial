@@ -74,8 +74,8 @@ const Post = (props) => {
               <img
                 className="postProfileImg"
                 src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
+                  user.profilePic
+                    ? PF + user.profilePic
                     : PF + "noAvatar.png"
                 }
                 alt=""

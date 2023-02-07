@@ -4,23 +4,21 @@ const CommentState = (props) => {
 
     const url = 'http://localhost:5000';
 
-    const [comments, setcomments] = useState([])
+    // const fetchAllComments = async (id) =>{
+    //     const response = await fetch(`${url}/api/comment/getall/${id}`, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'auth-token': localStorage.getItem('token') 
+    //         },
+    //     });
+    //     const json = await response.json();
+    //     json.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+    //     console.log(json);
+    //     setcomments(json);
+    // }
 
-    const fetchAllComments = async (id) =>{
-        const response = await fetch(`${url}/api/comment/getall/${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': localStorage.getItem('token') 
-            },
-        });
-        const json = await response.json();
-        json.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
-        console.log(json);
-        setcomments(json);
-    }
-
-    const addComment = async (content,id) =>{
+    const addComment = async (setcomments,comments,content,id) =>{
         const response = await fetch(`${url}/api/comment/create/${id}`, {
             method: 'POST',
             headers: {
@@ -36,7 +34,7 @@ const CommentState = (props) => {
         setcomments(newComments);
     }
 
-    const deleteComment = async (id) =>{
+    const deleteComment = async (comments,setcomments,id) =>{
         const response = await fetch(`${url}/api/comment/delete/${id}`, {
             method: 'DELETE',
             headers: {
@@ -66,7 +64,7 @@ const CommentState = (props) => {
         const json = await response.json();
     }
     return (
-        <commentContext.Provider value={{fetchAllComments,comments,addComment,deleteComment,likeComment}}>
+        <commentContext.Provider value={{addComment,deleteComment,likeComment}}>
             {props.children}
         </commentContext.Provider>
     )

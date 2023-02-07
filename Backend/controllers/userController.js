@@ -83,7 +83,7 @@ module.exports.login = async (req,res)=>{
 }
 
 module.exports.update = async (req,res)=>{
-    const {name,email,password,about}=req.body;
+    const {name,about,city,relationship,profilePic,coverPic}=req.body;
     try {
         let user = await User.findById(req.params.id);
 
@@ -96,7 +96,11 @@ module.exports.update = async (req,res)=>{
 
         user.name=name;
         user.about=about;
-
+        user.city=city;
+        user.relationship=relationship;
+        user.profilePic=profilePic;
+        user.coverPic=coverPic;
+        
         user.save();
         res.json(user);
     } catch (error) {
@@ -188,8 +192,8 @@ module.exports.getfriends = async (req,res)=>{
         let friendList = [];
 
         friends.map((friend)=>{
-            const {_id,name} = friend;
-            friendList.push({_id,name});
+            const {_id,name,profilePic} = friend;
+            friendList.push({_id,name,profilePic});
         })
 
         res.json(friendList);
