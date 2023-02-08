@@ -28,7 +28,6 @@ const CommentState = (props) => {
             body: JSON.stringify({content})
         });
         const json = await response.json();
-        console.log(json);
         const newComments = comments.concat(json);
         newComments.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
         setcomments(newComments);

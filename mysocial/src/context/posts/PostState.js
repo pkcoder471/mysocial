@@ -56,7 +56,6 @@ const PostState = (props) =>{
             body: JSON.stringify({content,img})
         });
         const json = await response.json();
-        console.log(json);
         const newPosts = posts.concat(json);
         newPosts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
         setposts(newPosts);
@@ -74,7 +73,6 @@ const PostState = (props) =>{
             },
         });
         const json = await response.json();
-        console.log(json);
         if(json.success){
         const newPosts = posts.filter((post) => { return post._id !== id });
         setposts(newPosts);

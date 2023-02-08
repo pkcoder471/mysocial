@@ -95,7 +95,7 @@ const Profile = () => {
                                     Update Profile
                                 </button>
                             )}
-                            {updateOpen && <UpdateProfile curruser={curruser} setupdateOpen={setupdateOpen}/>}
+                            {updateOpen && <UpdateProfile user={user} setuser={setuser} setupdateOpen={setupdateOpen}/>}
                         </div>
                         <div className="profileRightBottom">
                             <Feed posts={userposts} id={id} />

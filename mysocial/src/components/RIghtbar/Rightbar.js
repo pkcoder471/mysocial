@@ -119,7 +119,7 @@ const Rightbar = ({ user }) => {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {user ? <ProfileRightbar user={user} /> : <HomeRightbar />}
+        {user ? <ProfileRightbar user={user} key={user._id}/> : <HomeRightbar />}
       </div>
     </div>
   )

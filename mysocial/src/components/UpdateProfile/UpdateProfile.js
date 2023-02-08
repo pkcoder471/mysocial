@@ -1,22 +1,20 @@
 import React,{useState ,useContext} from 'react'
-import { useNavigate } from 'react-router-dom';
 import userContext from '../../context/users/userContext';
 import "./updateProfile.css";
 
 const UpdateProfile = (props) => {
-    const navigate = useNavigate();
-    const { curruser, setupdateOpen  } = props;
+    const { user, setupdateOpen ,setuser} = props;
     const context = useContext(userContext);
     const {updateUser} = context;
     const [Cover, setCover] = useState(null)
     const [Profile, setProfile] = useState(null)
     const [texts, setTexts] = useState({
-        name: curruser.name,
-        about: curruser.about,
-        city: curruser.city,
-        relationship: curruser.relationship,
-        profilePic:curruser.profilePic,
-        coverPic:curruser.coverPic,
+        name: user.name,
+        about: user.about,
+        city: user.city,
+        relationship: user.relationship,
+        profilePic:user.profilePic,
+        coverPic:user.coverPic,
       });
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const url = 'http://localhost:5000';
@@ -69,11 +67,10 @@ const UpdateProfile = (props) => {
               console.log(err);
             }
         }
-        updateUser(curruser,texts.name,texts.about,texts.city,texts.relationship,texts.coverPic,texts.profilePic);
+        updateUser(user,setuser,texts.name,texts.about,texts.city,texts.relationship,texts.coverPic,texts.profilePic);
         setupdateOpen(false);
         setCover(null);
         setProfile(null);
-        navigate(`/profile/${curruser._id}`)
 
     }
 
@@ -91,8 +88,8 @@ const UpdateProfile = (props) => {
                                         src={
                                             Cover
                                                 ? URL.createObjectURL(Cover)
-                                                : curruser.coverPic
-                                                ? PF + curruser.coverPic
+                                                : user.coverPic
+                                                ? PF + user.coverPic
                                                 : PF + "noCover.png"
                                         }
                                         alt=""
@@ -112,8 +109,8 @@ const UpdateProfile = (props) => {
                                         src={
                                             Profile
                                                 ? URL.createObjectURL(Profile)
-                                                : curruser.profilePic
-                                                ? PF + curruser.profilePic
+                                                : user.profilePic
+                                                ? PF + user.profilePic
                                                 : PF + "noAvatar.png"
                                         }
                                         alt=""
