@@ -73,7 +73,7 @@ const Comment = ({ postId }) => {
                         onChange={onChange}
 
                     />
-                    <button className="commentshareButton" type="submit" onClick={handleClick} >Post</button>
+                    <button className="commentshareButton" type="submit" onClick={handleClick} >Send</button>
 
                 </div>
                 {comments.map((comment) => {

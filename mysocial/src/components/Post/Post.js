@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import postContext from '../../context/posts/postContext';
@@ -9,8 +9,8 @@ const Post = (props) => {
 
   const [commentOpen, setCommentOpen] = useState(false);
   const contextpost = useContext(postContext);
-  const {deletePost,likePost} = contextpost;
-  
+  const { deletePost, likePost } = contextpost;
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const url = 'http://localhost:5000';
   const [user, setuser] = useState({})
@@ -34,7 +34,7 @@ const Post = (props) => {
     getUser();
     setlike(post.likes.length);
     //eslint-disable-next-line
-  }, [post.user,post.likes])
+  }, [post.user, post.likes])
 
   useEffect(() => {
     const getCurruser = async () => {
@@ -61,8 +61,15 @@ const Post = (props) => {
     setisliked(!isliked);
   }
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
+    const response = await fetch(`${url}/api/delete/${post.img}`, {
+      method: 'DELETE',
+      headers: {
+        'auth-token': localStorage.getItem('token')
+      },
+    });
+    const json = await response.json();
     deletePost(post._id);
   }
   return (
@@ -82,7 +89,7 @@ const Post = (props) => {
               />
               <span className="postUsername">{user.name}</span>
             </Link>
-            
+
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">

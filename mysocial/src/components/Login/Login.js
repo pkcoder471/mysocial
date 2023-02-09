@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
 import './login.css';
 
 const Login = () => {
+    
     const navigate = useNavigate();
     const [credentials, setcredentials] = useState({ email: "", password: "" });
     const url = 'http://localhost:5000';
+
+    useEffect(() => {
+      if(localStorage.getItem('token')){
+        navigate('/');
+      }
+    }, [])
+    
 
     const handleLogin = async (e) => {
         e.preventDefault();

@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import "./navbar.css";
+import React, { useEffect,useContext} from 'react'
 import { useNavigate, Link } from 'react-router-dom';
+import userContext from '../../context/users/userContext';
+import "./navbar.css";
+
+
 
 const Navbar = () => {
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-    const url = 'http://localhost:5000';
-    const [curruser, setcurruser] = useState({})
+    const contextuser = useContext(userContext);
+    const {getCurruser,curruser} = contextuser;
+
+
     const navigate = useNavigate();
     const handleLogout = (e) => {
         e.preventDefault();
@@ -16,19 +21,6 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        const getCurruser = async () => {
-
-            const response = await fetch(`${url}/api/user/getCurruser`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('token')
-                },
-            });
-            const json = await response.json();
-            setcurruser(json);
-
-        }
         getCurruser();
         //eslint-disable-next-line
     }, [])

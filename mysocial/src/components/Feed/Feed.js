@@ -10,6 +10,7 @@ const Feed = ({posts,id}) => {
 
 
   useEffect(() => {
+    window.scroll(0,0);
     const getCurruser = async () => {
 
       const response = await fetch(`${url}/api/user/getCurruser`, {

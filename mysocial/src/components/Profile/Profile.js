@@ -19,6 +19,7 @@ const Profile = () => {
 
     const [user, setuser] = useState({})
     useEffect(() => {
+        window.scroll(0,0);
         const getUser = async () => {
             const response = await fetch(`${url}/api/user/getUser/${id}`, {
                 method: 'GET',

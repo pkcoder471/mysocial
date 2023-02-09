@@ -27,7 +27,15 @@ const UpdateProfile = (props) => {
         e.preventDefault();
         if(Cover){
             const fileName = Date.now() + Cover.name;
-            console.log(fileName);
+            if(texts.coverPic!==""){
+                const response = await fetch(`${url}/api/delete/${texts.coverPic}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'auth-token': localStorage.getItem('token') 
+                    },
+                });
+                const json = await response.json();
+            }
             const data = new FormData();
             data.append("name",fileName);
             data.append("file",Cover);
@@ -48,7 +56,15 @@ const UpdateProfile = (props) => {
         }
         if(Profile){
             const fileName = Date.now() + Profile.name;
-            console.log(fileName);
+            if(texts.profilePic!==""){
+                const response = await fetch(`${url}/api/delete/${texts.profilePic}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'auth-token': localStorage.getItem('token') 
+                    },
+                });
+                const json = await response.json();
+            }
             const data = new FormData();
             data.append("name",fileName);
             data.append("file",Profile);

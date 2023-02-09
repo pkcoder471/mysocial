@@ -3,7 +3,7 @@ const connectTOMongo = require('./db');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
-
+const fs = require('fs');
 connectTOMongo();
 
 const app = express();
@@ -25,9 +25,18 @@ app.use(cors());
 app.use(express.json()); 
 const upload = multer({storage});
 app.post("/api/upload",upload.single("file"),(req,res)=>{
-    // console.log("hello");
     try {
+        
         return res.status(200).json("file uploaded successfully")
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+app.delete("/api/delete/:imgname",(req,res)=>{
+    try {
+        fs.unlinkSync(path.join(__dirname,"public/img/",req.params.imgname));
+        return res.status(200).json("file deleted successfully")
     } catch (err) {
         console.log(err);
     }
