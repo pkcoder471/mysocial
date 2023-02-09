@@ -34,7 +34,7 @@ const Feed = ({posts,id}) => {
         {posts.length!==0 ? posts.map((p) => {
           return <Post key={p._id} post={p} />
           }):
-          <img className='no-posts' src={PF+"no_posts.png"}></img>
+          <img className='no-posts' src={PF+"no_posts.png"} alt=""></img>
           }
       </div>
     </div>

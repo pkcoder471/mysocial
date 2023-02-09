@@ -12,6 +12,7 @@ const Login = () => {
       if(localStorage.getItem('token')){
         navigate('/');
       }
+    //eslint-disable-next-line
     }, [])
     
 

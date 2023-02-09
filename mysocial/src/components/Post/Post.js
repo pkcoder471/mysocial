@@ -69,7 +69,7 @@ const Post = (props) => {
         'auth-token': localStorage.getItem('token')
       },
     });
-    const json = await response.json();
+    await response.json();
     deletePost(post._id);
   }
   return (

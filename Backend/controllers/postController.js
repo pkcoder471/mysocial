@@ -16,7 +16,8 @@ module.exports.getallposts = async (req,res) =>{
         res.status(200).json(userPosts.concat(...friendsPosts));
     } catch (err) {
         console.log(err);
-        return res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -29,7 +30,8 @@ module.exports.getposts = async (req,res) =>{
         res.json(posts);
     } catch (err) {
         console.log(err);
-        return res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -44,7 +46,8 @@ module.exports.create = async (req,res) =>{
         res.json(post);
     } catch (err) {
         console.log(err);
-        return res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -64,7 +67,8 @@ module.exports.deletePost = async (req,res) =>{
         res.json({success,msg:"post has been deleted!"});
     } catch (err) {
         console.log(err);
-        return res.status(500).send(success,"Some Error occured");
+        return res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -84,6 +88,7 @@ module.exports.like = async (req,res) =>{
         
     } catch (err) {
         console.log(err);
-        return res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }

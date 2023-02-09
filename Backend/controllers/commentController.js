@@ -14,7 +14,8 @@ module.exports.getallcomment = async (req,res)=>{
 
     } catch (err) {
         console.log(err);
-        return res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -34,7 +35,8 @@ module.exports.createcomment = async (req,res)=>{
 
         } catch (err) {
             console.log(err);
-            return res.status(500).send("Some Error occured");
+            res.status(500).json({error:"Some Error occured"});
+
         }
 }
 
@@ -54,7 +56,8 @@ module.exports.deletecomment = async (req,res)=>{
 
     } catch (err) {
         console.log(err);
-        return res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -76,6 +79,7 @@ module.exports.like = async (req,res) =>{
         
     } catch (err) {
         console.log(err);
-        return res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }

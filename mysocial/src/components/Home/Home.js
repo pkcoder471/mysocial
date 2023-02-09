@@ -49,7 +49,7 @@ const Home = () => {
       <div className="homeContainer">
         <Sidebar />
         <Feed posts={posts} id={curruser._id}/>
-        <Rightbar/>
+        <Rightbar user={null} />
       </div>
     </>
   )

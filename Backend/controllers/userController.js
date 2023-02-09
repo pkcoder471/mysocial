@@ -78,7 +78,8 @@ module.exports.login = async (req,res)=>{
         res.json({success,authToken});
     } catch (error) {
         console.log(error);
-        res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -105,7 +106,8 @@ module.exports.update = async (req,res)=>{
         res.json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -127,7 +129,8 @@ module.exports.delete = async (req,res)=>{
         res.status(200).json({success:"Account has been deleted!"});
     } catch (error) {
         console.log(error);
-        res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -143,7 +146,8 @@ module.exports.getUser = async (req,res)=>{
         res.status(200).json(other);
     } catch (error) {
         console.log(error);
-        res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -175,7 +179,8 @@ module.exports.follow = async (req,res)=>{
         
     } catch (error) {
         console.log(error);
-        res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 //todo profile picture
@@ -200,7 +205,8 @@ module.exports.getfriends = async (req,res)=>{
         
     } catch (error) {
         console.log(error);
-        res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
 }
 
@@ -213,7 +219,8 @@ module.exports.curruser = async (req,res) =>{
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
-        res.status(500).send("Some Error occured");
+        res.status(500).json({error:"Some Error occured"});
+
     }
     
 }

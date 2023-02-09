@@ -34,7 +34,7 @@ const UpdateProfile = (props) => {
                         'auth-token': localStorage.getItem('token') 
                     },
                 });
-                const json = await response.json();
+                await response.json();
             }
             const data = new FormData();
             data.append("name",fileName);
@@ -63,7 +63,7 @@ const UpdateProfile = (props) => {
                         'auth-token': localStorage.getItem('token') 
                     },
                 });
-                const json = await response.json();
+                await response.json();
             }
             const data = new FormData();
             data.append("name",fileName);

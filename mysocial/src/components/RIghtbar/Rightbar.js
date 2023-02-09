@@ -3,10 +3,12 @@ import "./rightbar.css"
 import userContext from '../../context/users/userContext';
 import { Link } from 'react-router-dom';
 
-const Rightbar = ({ user }) => {
+const Rightbar = ({ userFriends,user}) => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const url = 'http://localhost:5000';
+
+  //HomeRightbar starts
 
   const HomeRightbar = () => {
 
@@ -23,22 +25,21 @@ const Rightbar = ({ user }) => {
     );
   };
 
-  const ProfileRightbar = ({ user }) => {
+  //HomeRightbar Ends
 
-    const [curruser, setcurruser] = useState({})
+  //ProfileRightbar starts
+  const ProfileRightbar = ({userFriends,user }) => {
+
     const [isfollowed, setisfollowed] = useState(false);
+    const [curruser, setcurruser] = useState({})
+
     const context = useContext(userContext);
-    const { getuserFriends, userFriends, followuser } = context;
+    const { followuser } = context;
 
-
-    useEffect(() => {
-      getuserFriends(user._id)
-      //eslint-disable-next-line
-    }, [user])
 
     useEffect(() => {
       const getCurruser = async () => {
-
+  
         const response = await fetch(`${url}/api/user/getCurruser`, {
           method: 'GET',
           headers: {
@@ -55,9 +56,9 @@ const Rightbar = ({ user }) => {
       }
       getCurruser();
       //eslint-disable-next-line
-    }, [curruser._id, user.followings])
+    }, [user._id])
 
-    const handleClick = (e) =>{
+    const handleClick = (e) => {
       e.preventDefault();
       followuser(user);
       setisfollowed(!isfollowed);
@@ -86,11 +87,11 @@ const Rightbar = ({ user }) => {
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
           {userFriends.length === 0 ? <h4 style={{ color: "gray" }}>No friends...</h4> : userFriends.map((friend) => (
-            <Link
+            <li style={{ listStyleType: "none"}} key={friend._id}><Link
               to={"/profile/" + friend._id}
               style={{ textDecoration: "none" }}
             >
-              <div className="rightbarFollowing">
+              <div className="rightbarFollowing" >
                 <img
                   src={
                     friend.profilePic
@@ -103,15 +104,18 @@ const Rightbar = ({ user }) => {
                 <span className="rightbarFollowingName">{friend.name}</span>
               </div>
             </Link>
+            </li>
           ))}
         </div>
       </>
     );
   };
+//ProfileRightbar Ends
+
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {user ? <ProfileRightbar user={user} key={user._id}/> : <HomeRightbar />}
+        {user ? <ProfileRightbar user={user} userFriends={userFriends} /> : <HomeRightbar />}
       </div>
     </div>
   )

@@ -7,6 +7,8 @@ import "./Profile.css"
 import Feed from '../Feed/Feed';
 import Rightbar from '../RIghtbar/Rightbar';
 import UpdateProfile from '../UpdateProfile/UpdateProfile';
+import userContext from '../../context/users/userContext';
+
 
 const Profile = () => {
     const id = useParams().id;
@@ -14,6 +16,8 @@ const Profile = () => {
     const url = 'http://localhost:5000';
     const contextpost = useContext(postContext);
     const { getPostsofUser, userposts } = contextpost;
+    const context = useContext(userContext);
+    const { getuserFriends , userFriends } = context;
     const [curruser, setcurruser] = useState({})
     const [updateOpen, setupdateOpen] = useState(false)
 
@@ -37,6 +41,7 @@ const Profile = () => {
 
     useEffect(() => {
         getPostsofUser(id);
+        getuserFriends(id);
         //eslint-disable-next-line
     }, [id])
 
@@ -100,7 +105,7 @@ const Profile = () => {
                         </div>
                         <div className="profileRightBottom">
                             <Feed posts={userposts} id={id} />
-                            <Rightbar user={user} />
+                            <Rightbar user={user} userFriends={userFriends} />
                         </div>
                     </div>
                 </div>
