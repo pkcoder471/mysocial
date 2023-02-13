@@ -3,7 +3,7 @@ import Post from '../Post/Post'
 import "./feed.css";
 import Addpost from '../Addpost/Addpost';
 
-const Feed = ({posts,id}) => {
+const Feed = ({posts,id,socket}) => {
   const url = 'http://localhost:5000';
   const [curruser, setcurruser] = useState({})
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -27,12 +27,14 @@ const Feed = ({posts,id}) => {
     getCurruser();
     //eslint-disable-next-line
   }, [setcurruser])
+
+  console.log(socket);
   return (
     <div className="feed">
       <div className="feedWrapper">
         {id===curruser._id && <Addpost/>}
         {posts.length!==0 ? posts.map((p) => {
-          return <Post key={p._id} post={p} />
+          return <Post socket = {socket} key={p._id} post={p} />
           }):
           <img className='no-posts' src={PF+"no_posts.png"} alt=""></img>
           }

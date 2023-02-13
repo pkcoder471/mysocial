@@ -7,7 +7,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import postContext from '../../context/posts/postContext'
 import { useContext } from 'react'
 import "./home.css"
-const Home = () => {
+const Home = ({socket}) => {
   const navigate = useNavigate();
   const contextpost = useContext(postContext);
   const {getPosts,posts} =  contextpost;
@@ -36,19 +36,20 @@ const Home = () => {
         },
       });
       const json = await response.json();
+      socket?.emit("newUser",json._id)
       setcurruser(json);
 
     }
     getCurruser();
     //eslint-disable-next-line
-  }, [])
+  }, [socket])
 
   return (
     <>
-      <Navbar />
+      <Navbar socket = {socket}/>
       <div className="homeContainer">
         <Sidebar />
-        <Feed posts={posts} id={curruser._id}/>
+        <Feed socket = {socket} posts={posts} id={curruser._id}/>
         <Rightbar user={null} />
       </div>
     </>

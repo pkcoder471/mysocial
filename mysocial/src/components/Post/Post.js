@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import postContext from '../../context/posts/postContext';
 import "./post.css"
 import Comment from '../Comment/Comment';
+
 const Post = (props) => {
-  let { post } = props;
+  let { post ,socket} = props;
 
   const [commentOpen, setCommentOpen] = useState(false);
   const contextpost = useContext(postContext);
@@ -59,6 +60,13 @@ const Post = (props) => {
     likePost(post._id);
     setlike(isliked ? like - 1 : like + 1);
     setisliked(!isliked);
+    if(isliked){
+    socket.emit("sendNotification",{
+      senderName: curruser,
+      receiverName: user,
+      type:1,
+    })
+    }
   }
 
   const handleDelete = async (e) => {

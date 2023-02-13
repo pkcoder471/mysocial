@@ -8,13 +8,13 @@ import PostState from "./context/posts/PostState";
 import CommentState from "./context/comments/CommentState";
 import Profile from "./components/Profile/Profile";
 import { io } from "socket.io-client";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 
 function App() {
+  const [socket, setsocket] = useState(null);
 
   useEffect(() => {
-    const socket = io('http://localhost:8000');
-    console.log(socket);
+    setsocket(io('http://localhost:8000'));
   }, [])
   
   return (
@@ -24,7 +24,7 @@ function App() {
     <CommentState>
     <BrowserRouter>
     <Routes>
-      <Route exact path='/' element={<Home/>}/>
+      <Route exact path='/' element={<Home socket={socket}/>}/>
       <Route exact path='/login' element={<Login/>}/>
       <Route exact path='/signUp' element={<SignUp/>}/>
       <Route exact path='/profile/:id' element={<Profile/>}/>

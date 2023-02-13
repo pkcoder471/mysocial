@@ -1,18 +1,19 @@
-import React, { useEffect,useContext} from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import userContext from '../../context/users/userContext';
 import "./navbar.css";
 
 
 
-const Navbar = () => {
+const Navbar = ({ socket }) => {
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     const contextuser = useContext(userContext);
-    const {getCurruser,curruser} = contextuser;
+    const { getCurruser, curruser } = contextuser;
+    const [open, setOpen] = useState(false);
 
-
+    const [notification, setNotification] = useState([])
     const navigate = useNavigate();
     const handleLogout = (e) => {
         e.preventDefault();
@@ -24,6 +25,35 @@ const Navbar = () => {
         getCurruser();
         //eslint-disable-next-line
     }, [])
+
+    useEffect(() => {
+        socket?.on("getNotification", data => {
+            setNotification((prev) => [...prev, data])
+        })
+    }, [socket])
+
+    console.log(notification);
+
+    const displayNotification = ({ senderName, type }) => {
+        let action;
+
+        if (type === 1) {
+            action = "liked";
+        } else if (type === 2) {
+            action = "commented";
+        } else {
+            action = "shared";
+        }
+        return (
+            <span className="notification">{`${senderName.name} ${action} your post.`}</span>
+        );
+    };
+
+    const handleRead = () => {
+        setNotification([]);
+        setOpen(false);
+    };
+
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">
@@ -42,18 +72,20 @@ const Navbar = () => {
             </div>
             <div className="topbarRight">
                 <div className="topbarLinks">
-                <Link to='/'><span className="topbarLink">Homepage</span></Link>
+                    <Link to='/'><span className="topbarLink">Homepage</span></Link>
 
                     {/* <span className="topbarLink">Homepage</span> */}
                 </div>
                 <div className="topbarIcons">
                     <div className="topbarIconItem">
                         <i className="fa-regular fa-message"></i>
-                        <span className="topbarIconBadge">2</span>
+                        <span className="topbarIconBadge">1</span>
                     </div>
                     <div className="topbarIconItem">
-                        <i className="fa-solid fa-bell"></i>
-                        <span className="topbarIconBadge">1</span>
+                        <i className="fa-solid fa-bell" onClick={() => setOpen(!open)} ></i>
+                        {notification.length>0 && <span className="topbarIconBadge">
+                            {notification.length}
+                        </span>}
                     </div>
                 </div>
                 <img
@@ -74,6 +106,14 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
+            {open && (
+                <div className="notifications">
+                    {notification.map((n) => displayNotification(n))}
+                    <button className="nButton" onClick={handleRead}>
+                        Mark as read
+                    </button>
+                </div>
+            )}
         </div>
     )
 }
