@@ -7,8 +7,16 @@ import SignUp from "./components/SignUp/SignUp";
 import PostState from "./context/posts/PostState";
 import CommentState from "./context/comments/CommentState";
 import Profile from "./components/Profile/Profile";
+import { io } from "socket.io-client";
+import { useEffect } from "react";
 
 function App() {
+
+  useEffect(() => {
+    const socket = io('http://localhost:8000');
+    console.log(socket);
+  }, [])
+  
   return (
     <>
     <UserState>
