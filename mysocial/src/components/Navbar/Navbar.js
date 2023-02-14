@@ -43,7 +43,7 @@ const Navbar = ({ socket }) => {
             action = "commented on";
         } else {
             return (
-                <li key={senderName._id} className="show"><Link to={`/profile/${senderName._id}`}><img
+                <li key={senderName._id} className="show-notify"><Link to={`/profile/${senderName._id}`}><img
                 className="commentshareProfileImg"
                 src={
                     senderName.profilePic

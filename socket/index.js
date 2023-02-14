@@ -32,10 +32,12 @@ io.on('connection', (socket) => {
     socket.on("sendNotification",({senderName,receiverName,type})=>{
         if(senderName._id!==receiverName._id){
         const receiver = getUser(receiverName._id);
+        if(receiver){
         io.to(receiver.socketId).emit("getNotification",{
             senderName,
             type,
         })
+        }
         }
         
     })
