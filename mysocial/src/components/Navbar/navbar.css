@@ -110,8 +110,10 @@
     flex-direction: column;
     padding: 10px;
     max-height: 300px;
-    width: 250px;
+    width: 300px;
     overflow-y: scroll;
+    box-shadow: rgb(0 0 0 / 6%) 0px 1px 8px;
+    border-radius: 10px;
   }
   
   .notification {
@@ -123,4 +125,18 @@
     width: 80%;
     padding: 5px;
     margin-top: 10px;
+  }
+
+  .show{
+    list-style-type: none;
+    padding: 5px;
+  }
+  .d-name{
+    font-weight: 500;
+    color: black;
+  }
+  .no-notify{
+    height: 200px;
+    width: 200px;
+    margin-left: 40px;
   }

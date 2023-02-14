@@ -104,7 +104,7 @@ const Profile = ({socket}) => {
                             {updateOpen && <UpdateProfile user={user} setuser={setuser} setupdateOpen={setupdateOpen}/>}
                         </div>
                         <div className="profileRightBottom">
-                            <Feed posts={userposts} id={id} />
+                            <Feed posts={userposts} id={id} socket={socket} />
                             <Rightbar user={user} socket={socket} userFriends={userFriends} />
                         </div>
                     </div>

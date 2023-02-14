@@ -9,9 +9,9 @@ const io = new Server({
 
 let onlineUsers = []
 
-const addNewUser = (user,userId, socketId) => {
-    !onlineUsers.some((curruser) => curruser.userId === userId) &&
-        onlineUsers.push({ user,userId, socketId });
+const addNewUser = (userId, socketId) => {
+    !onlineUsers.some((user) => user.userId === userId) &&
+        onlineUsers.push({ userId, socketId });
 }
 
 const removeUser = (socketId) => {
@@ -25,8 +25,8 @@ const getUser = (userId) => {
 io.on('connection', (socket) => {
 
     
-    socket.on("newUser",(user) =>{
-        addNewUser(user,user._id,socket.id);
+    socket.on("newUser",(userId) =>{
+        addNewUser(userId,socket.id);
     })
 
     socket.on("sendNotification",({senderName,receiverName,type})=>{

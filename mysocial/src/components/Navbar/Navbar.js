@@ -43,11 +43,33 @@ const Navbar = ({ socket }) => {
             action = "commented on";
         } else {
             return (
-                <li key={senderName._id} style={{ listStyleType: "none"}}><span className="notification">{`${senderName.name} is now following you.`}</span></li>
+                <li key={senderName._id} className="show"><Link to={`/profile/${senderName._id}`}><img
+                className="commentshareProfileImg"
+                src={
+                    senderName.profilePic
+                        ? PF + senderName.profilePic
+                        : PF + "noAvatar.png"
+                }
+                alt=""
+                />
+            <span className="d-name">{senderName.name}</span>
+            </Link>
+            <span className="notification">is now following you.</span></li>
             );
         }
         return (
-            <li key={senderName._id} style={{ listStyleType: "none"}}><span className="notification">{`${senderName.name} ${action} your post.`}</span></li>
+            <li key={senderName._id} className="show"><Link to={`/profile/${senderName._id}`}><img
+            className="commentshareProfileImg"
+            src={
+                senderName.profilePic
+                    ? PF + senderName.profilePic
+                    : PF + "noAvatar.png"
+            }
+            alt=""
+            />
+            <span className="d-name">{senderName.name}</span>
+            </Link>
+            <span className="notification">{`${action} your post.`}</span></li>
         );
     };
 
@@ -110,10 +132,10 @@ const Navbar = ({ socket }) => {
             </div>
             {open && (
                 <div className="notifications">
-                    {notification.map((n) => displayNotification(n))}
-                    <button className="btn btn-primary" onClick={handleRead}>
+                    {notification.length===0?<img className='no-notify' src={PF+"no_notify.jpg"} alt=""></img>:notification.map((n) => displayNotification(n))}
+                    {notification.length!==0 && <button className="btn btn-primary" onClick={handleRead}>
                         Mark as read
-                    </button>
+                    </button>}
                 </div>
             )}
         </div>
