@@ -3,7 +3,7 @@ import "./rightbar.css"
 import userContext from '../../context/users/userContext';
 import { Link } from 'react-router-dom';
 
-const Rightbar = ({ userFriends,user}) => {
+const Rightbar = ({ userFriends,user ,socket}) => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const url = 'http://localhost:5000';
@@ -28,7 +28,7 @@ const Rightbar = ({ userFriends,user}) => {
   //HomeRightbar Ends
 
   //ProfileRightbar starts
-  const ProfileRightbar = ({userFriends,user }) => {
+  const ProfileRightbar = ({userFriends,user,socket }) => {
 
     const [isfollowed, setisfollowed] = useState(false);
     const [curruser, setcurruser] = useState({})
@@ -61,6 +61,13 @@ const Rightbar = ({ userFriends,user}) => {
     const handleClick = (e) => {
       e.preventDefault();
       followuser(user);
+      if(!isfollowed){
+      socket.emit("sendNotification", {
+        senderName: curruser,
+        receiverName: user,
+        type: 3,
+    })
+  }
       setisfollowed(!isfollowed);
     }
 
@@ -115,7 +122,7 @@ const Rightbar = ({ userFriends,user}) => {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {user ? <ProfileRightbar user={user} userFriends={userFriends} /> : <HomeRightbar />}
+        {user ? <ProfileRightbar user={user} userFriends={userFriends} socket={socket}/> : <HomeRightbar />}
       </div>
     </div>
   )

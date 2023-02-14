@@ -36,7 +36,6 @@ const Home = ({socket}) => {
         },
       });
       const json = await response.json();
-      socket?.emit("newUser",json._id)
       setcurruser(json);
 
     }

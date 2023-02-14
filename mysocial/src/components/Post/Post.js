@@ -6,7 +6,7 @@ import "./post.css"
 import Comment from '../Comment/Comment';
 
 const Post = (props) => {
-  let { post ,socket} = props;
+  let { post, socket } = props;
 
   const [commentOpen, setCommentOpen] = useState(false);
   const contextpost = useContext(postContext);
@@ -59,14 +59,15 @@ const Post = (props) => {
   const likeHandler = () => {
     likePost(post._id);
     setlike(isliked ? like - 1 : like + 1);
-    setisliked(!isliked);
-    if(isliked){
-    socket.emit("sendNotification",{
-      senderName: curruser,
-      receiverName: user,
-      type:1,
-    })
+    if (!isliked) {
+      socket.emit("sendNotification", {
+        senderName: curruser,
+        receiverName: user,
+        type: 1,
+      })
     }
+    setisliked(!isliked);
+
   }
 
   const handleDelete = async (e) => {
@@ -127,7 +128,7 @@ const Post = (props) => {
             <span className="postCommentText" onClick={() => setCommentOpen(!commentOpen)} >See comments</span>
           </div>
         </div>
-        {commentOpen && <Comment postId={post._id} />}
+        {commentOpen && <Comment postId={post._id} socket={socket} user={user}/>}
       </div>
     </div>
   )

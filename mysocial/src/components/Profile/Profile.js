@@ -10,7 +10,7 @@ import UpdateProfile from '../UpdateProfile/UpdateProfile';
 import userContext from '../../context/users/userContext';
 
 
-const Profile = () => {
+const Profile = ({socket}) => {
     const id = useParams().id;
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const url = 'http://localhost:5000';
@@ -105,7 +105,7 @@ const Profile = () => {
                         </div>
                         <div className="profileRightBottom">
                             <Feed posts={userposts} id={id} />
-                            <Rightbar user={user} userFriends={userFriends} />
+                            <Rightbar user={user} socket={socket} userFriends={userFriends} />
                         </div>
                     </div>
                 </div>

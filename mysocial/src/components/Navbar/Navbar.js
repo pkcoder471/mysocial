@@ -40,12 +40,14 @@ const Navbar = ({ socket }) => {
         if (type === 1) {
             action = "liked";
         } else if (type === 2) {
-            action = "commented";
+            action = "commented on";
         } else {
-            action = "shared";
+            return (
+                <li key={senderName._id} style={{ listStyleType: "none"}}><span className="notification">{`${senderName.name} is now following you.`}</span></li>
+            );
         }
         return (
-            <span className="notification">{`${senderName.name} ${action} your post.`}</span>
+            <li key={senderName._id} style={{ listStyleType: "none"}}><span className="notification">{`${senderName.name} ${action} your post.`}</span></li>
         );
     };
 
@@ -109,7 +111,7 @@ const Navbar = ({ socket }) => {
             {open && (
                 <div className="notifications">
                     {notification.map((n) => displayNotification(n))}
-                    <button className="nButton" onClick={handleRead}>
+                    <button className="btn btn-primary" onClick={handleRead}>
                         Mark as read
                     </button>
                 </div>

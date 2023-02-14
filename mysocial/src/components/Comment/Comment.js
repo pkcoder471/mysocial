@@ -3,7 +3,7 @@ import commentContext from "../../context/comments/commentContext"
 import userContext from '../../context/users/userContext';
 import CommentItem from "../CommetItem/CommentItem";
 import "./comment.css";
-const Comment = ({ postId }) => {
+const Comment = ({ postId ,socket,user}) => {
 
     const context = useContext(commentContext);
     const url = 'http://localhost:5000';
@@ -35,7 +35,6 @@ const Comment = ({ postId }) => {
             });
             const json = await response.json();
             json.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
-            console.log(json);
             setcomments(json);
         }
         fetchAllComments();
@@ -45,6 +44,11 @@ const Comment = ({ postId }) => {
     const handleClick = async (e) => {
         e.preventDefault();
         addComment(setcomments,comments,comment.content, postId);
+        socket.emit("sendNotification", {
+            senderName: curruser,
+            receiverName: user,
+            type: 2,
+        })
         setcomment({ content: "" });
 
     }

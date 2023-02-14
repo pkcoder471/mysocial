@@ -16,6 +16,26 @@ function App() {
   useEffect(() => {
     setsocket(io('http://localhost:8000'));
   }, [])
+
+  const url = 'http://localhost:5000';
+
+  useEffect(() => {
+    const getCurruser = async () => {
+
+      const response = await fetch(`${url}/api/user/getCurruser`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token')
+        },
+      });
+      const json = await response.json();
+      socket?.emit("newUser",json)
+
+    }
+    getCurruser();
+    //eslint-disable-next-line
+  }, [socket])
   
   return (
     <>
@@ -27,7 +47,7 @@ function App() {
       <Route exact path='/' element={<Home socket={socket}/>}/>
       <Route exact path='/login' element={<Login/>}/>
       <Route exact path='/signUp' element={<SignUp/>}/>
-      <Route exact path='/profile/:id' element={<Profile/>}/>
+      <Route exact path='/profile/:id' element={<Profile socket={socket} />}/>
     </Routes>
     </BrowserRouter>
     </CommentState>
