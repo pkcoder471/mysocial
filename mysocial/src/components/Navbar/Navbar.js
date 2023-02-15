@@ -32,8 +32,6 @@ const Navbar = ({ socket }) => {
         })
     }, [socket])
 
-    console.log(notification);
-
     const displayNotification = ({ senderName, type }) => {
         let action;
 
@@ -58,7 +56,7 @@ const Navbar = ({ socket }) => {
             );
         }
         return (
-            <li key={senderName._id} className="show"><Link to={`/profile/${senderName._id}`}><img
+            <li key={senderName._id} className="show-notify"><Link to={`/profile/${senderName._id}`}><img
             className="commentshareProfileImg"
             src={
                 senderName.profilePic

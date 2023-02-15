@@ -2,25 +2,52 @@ import React, { useContext, useEffect, useState } from 'react'
 import "./rightbar.css"
 import userContext from '../../context/users/userContext';
 import { Link } from 'react-router-dom';
+import Online from '../Online/Online';
 
-const Rightbar = ({ userFriends,user ,socket}) => {
+const Rightbar = ({ userFriends, user, socket}) => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const url = 'http://localhost:5000';
 
   //HomeRightbar starts
 
-  const HomeRightbar = () => {
+  const HomeRightbar = ({ socket}) => {
+
+    const [users, setusers] = useState([]);
+    const [curruser, setcurruser] = useState({})
+   
+      useEffect(() => {
+        const getCurruser = async () => {
+  
+          const response = await fetch(`${url}/api/user/getCurruser`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'auth-token': localStorage.getItem('token')
+            },
+          });
+          const json = await response.json();
+          socket?.on("fetchOnlineusers", users => {
+            console.log(users);
+            // setusers(json.followings.filter((f) => users.some((u) => u.userId === f)));
+            setusers(users)
+          })
+          setcurruser(json);
+  
+        }
+        getCurruser();
+        //eslint-disable-next-line
+      
+    }, [socket])
+
+    
+
 
     return (
       <>
         <img className="rightbarAd" src={PF + "social.webp"} alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
-        {/* <ul className="rightbarFriendList">
-              {Users.map((u) => (
-                <Online key={u.id} user={u} />
-              ))}
-            </ul> */}
+            <Online users={users} id={curruser._id} />
       </>
     );
   };
@@ -28,7 +55,7 @@ const Rightbar = ({ userFriends,user ,socket}) => {
   //HomeRightbar Ends
 
   //ProfileRightbar starts
-  const ProfileRightbar = ({userFriends,user,socket }) => {
+  const ProfileRightbar = ({ userFriends, user, socket }) => {
 
     const [isfollowed, setisfollowed] = useState(false);
     const [curruser, setcurruser] = useState({})
@@ -39,7 +66,7 @@ const Rightbar = ({ userFriends,user ,socket}) => {
 
     useEffect(() => {
       const getCurruser = async () => {
-  
+
         const response = await fetch(`${url}/api/user/getCurruser`, {
           method: 'GET',
           headers: {
@@ -61,13 +88,13 @@ const Rightbar = ({ userFriends,user ,socket}) => {
     const handleClick = (e) => {
       e.preventDefault();
       followuser(user);
-      if(!isfollowed){
-      socket.emit("sendNotification", {
-        senderName: curruser,
-        receiverName: user,
-        type: 3,
-    })
-  }
+      if (!isfollowed) {
+        socket.emit("sendNotification", {
+          senderName: curruser,
+          receiverName: user,
+          type: 3,
+        })
+      }
       setisfollowed(!isfollowed);
     }
 
@@ -94,7 +121,7 @@ const Rightbar = ({ userFriends,user ,socket}) => {
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
           {userFriends.length === 0 ? <h4 style={{ color: "gray" }}>No friends...</h4> : userFriends.map((friend) => (
-            <li style={{ listStyleType: "none"}} key={friend._id}><Link
+            <li style={{ listStyleType: "none" }} key={friend._id}><Link
               to={"/profile/" + friend._id}
               style={{ textDecoration: "none" }}
             >
@@ -117,12 +144,12 @@ const Rightbar = ({ userFriends,user ,socket}) => {
       </>
     );
   };
-//ProfileRightbar Ends
+  //ProfileRightbar Ends
 
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {user ? <ProfileRightbar user={user} userFriends={userFriends} socket={socket}/> : <HomeRightbar />}
+        {user ? <ProfileRightbar user={user} userFriends={userFriends} socket={socket} /> : <HomeRightbar socket={socket}/>}
       </div>
     </div>
   )

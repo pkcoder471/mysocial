@@ -27,7 +27,11 @@ io.on('connection', (socket) => {
     
     socket.on("newUser",(userId) =>{
         addNewUser(userId,socket.id);
+        console.log(onlineUsers);
+        io.emit("fetchOnlineusers",onlineUsers);
     })
+
+    
 
     socket.on("sendNotification",({senderName,receiverName,type})=>{
         if(senderName._id!==receiverName._id){
@@ -43,6 +47,7 @@ io.on('connection', (socket) => {
     })
     socket.on("disconnect", () => {
         removeUser(socket.id);
+        io.emit("fetchOnlineusers",onlineUsers);
     })
 });
 

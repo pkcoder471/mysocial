@@ -43,13 +43,14 @@ const Home = ({socket}) => {
     //eslint-disable-next-line
   }, [socket])
 
+
   return (
     <>
       <Navbar socket = {socket}/>
       <div className="homeContainer">
         <Sidebar />
         <Feed socket = {socket} posts={posts} id={curruser._id}/>
-        <Rightbar user={null} />
+        <Rightbar socket = {socket} curruser={curruser} />
       </div>
     </>
   )
