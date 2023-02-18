@@ -28,7 +28,7 @@ const Feed = ({posts,id,socket}) => {
     //eslint-disable-next-line
   }, [setcurruser])
 
-  console.log(socket);
+  // console.log(socket);
   return (
     <div className="feed">
       <div className="feedWrapper">

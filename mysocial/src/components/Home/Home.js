@@ -5,12 +5,18 @@ import Navbar from '../Navbar/Navbar'
 import Rightbar from '../RIghtbar/Rightbar';
 import Sidebar from '../Sidebar/Sidebar';
 import postContext from '../../context/posts/postContext'
+import userContext from '../../context/users/userContext';
+
 import { useContext } from 'react'
 import "./home.css"
+
 const Home = ({socket}) => {
   const navigate = useNavigate();
   const contextpost = useContext(postContext);
   const {getPosts,posts} =  contextpost;
+  
+  const context = useContext(userContext);
+  const { getuserFriends , userFriends } = context;
   useEffect(() => {
 
     if(!localStorage.getItem('token')){
@@ -36,6 +42,9 @@ const Home = ({socket}) => {
         },
       });
       const json = await response.json();
+      socket?.emit("newUser",json._id)
+      getuserFriends(json._id);
+
       setcurruser(json);
 
     }
@@ -50,7 +59,7 @@ const Home = ({socket}) => {
       <div className="homeContainer">
         <Sidebar />
         <Feed socket = {socket} posts={posts} id={curruser._id}/>
-        <Rightbar socket = {socket} curruser={curruser} />
+        <Rightbar socket = {socket} userFriends={userFriends}/>
       </div>
     </>
   )

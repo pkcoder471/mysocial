@@ -30,7 +30,6 @@ function App() {
         },
       });
       const json = await response.json();
-      socket?.emit("newUser",json._id)
 
     }
     getCurruser();

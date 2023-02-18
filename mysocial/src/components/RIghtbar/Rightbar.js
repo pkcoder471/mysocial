@@ -11,10 +11,9 @@ const Rightbar = ({ userFriends, user, socket}) => {
 
   //HomeRightbar starts
 
-  const HomeRightbar = ({ socket}) => {
+  const HomeRightbar = ({ socket,userFriends}) => {
 
     const [users, setusers] = useState([]);
-    const [curruser, setcurruser] = useState({})
    
       useEffect(() => {
         const getCurruser = async () => {
@@ -27,12 +26,11 @@ const Rightbar = ({ userFriends, user, socket}) => {
             },
           });
           const json = await response.json();
+
           socket?.on("fetchOnlineusers", users => {
-            console.log(users);
-            // setusers(json.followings.filter((f) => users.some((u) => u.userId === f)));
-            setusers(users)
+
+            setusers(json.followings.filter((f) => users.some((u) => u.userId === f)));
           })
-          setcurruser(json);
   
         }
         getCurruser();
@@ -47,7 +45,7 @@ const Rightbar = ({ userFriends, user, socket}) => {
       <>
         <img className="rightbarAd" src={PF + "social.webp"} alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
-            <Online users={users} id={curruser._id} />
+            <Online users={users} userFriends={userFriends}/>
       </>
     );
   };
@@ -149,7 +147,7 @@ const Rightbar = ({ userFriends, user, socket}) => {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {user ? <ProfileRightbar user={user} userFriends={userFriends} socket={socket} /> : <HomeRightbar socket={socket}/>}
+        {user ? <ProfileRightbar user={user} userFriends={userFriends} socket={socket} /> : <HomeRightbar socket={socket} userFriends={userFriends}/>}
       </div>
     </div>
   )
