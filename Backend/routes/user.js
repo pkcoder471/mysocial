@@ -22,6 +22,7 @@ router.get('/getUser/:id',fetchUser,userController.getUser);
 router.put('/follow/:id',fetchUser,userController.follow);
 router.get('/getfriends/:id',fetchUser,userController.getfriends);
 router.get('/getCurruser',fetchUser,userController.curruser);
+router.get('/getallusers',fetchUser,userController.getallusers);
 
 
 

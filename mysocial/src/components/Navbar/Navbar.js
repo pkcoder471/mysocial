@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import userContext from '../../context/users/userContext';
+import Search from '../Search/Search';
 import "./navbar.css";
 
 
@@ -14,6 +15,7 @@ const Navbar = ({ socket }) => {
     const [open, setOpen] = useState(false);
 
     const [notification, setNotification] = useState([])
+    const [query, setquery] = useState("")
     const navigate = useNavigate();
     const handleLogout = (e) => {
         e.preventDefault();
@@ -90,14 +92,14 @@ const Navbar = ({ socket }) => {
                     <input
                         placeholder=" Search for friend "
                         className="searchInput"
+                        onChange={(e)=>{setquery(e.target.value.toLowerCase())}}
                     />
                 </div>
+                <Search/>
             </div>
             <div className="topbarRight">
                 <div className="topbarLinks">
                     <Link to='/'><span className="topbarLink">Homepage</span></Link>
-
-                    {/* <span className="topbarLink">Homepage</span> */}
                 </div>
                 <div className="topbarIcons">
                     <div className="topbarIconItem">
