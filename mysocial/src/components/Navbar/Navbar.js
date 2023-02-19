@@ -9,13 +9,16 @@ import "./navbar.css";
 const Navbar = ({ socket }) => {
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    const url = 'http://localhost:5000';
 
     const contextuser = useContext(userContext);
     const { getCurruser, curruser } = contextuser;
     const [open, setOpen] = useState(false);
 
     const [notification, setNotification] = useState([])
-    const [query, setquery] = useState("")
+    const [query, setquery] = useState("");
+    const [users, setusers] = useState([])
+
     const navigate = useNavigate();
     const handleLogout = (e) => {
         e.preventDefault();
@@ -73,6 +76,25 @@ const Navbar = ({ socket }) => {
         );
     };
 
+    useEffect(() => {
+        const getallUsers = async () => {
+
+            const response = await fetch(`${url}/api/user/getallusers?q=${query}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': localStorage.getItem('token')
+                },
+                
+            });
+            const json = await response.json();
+            setusers(json);
+    
+        }
+        getallUsers();
+    }, [query])
+    
+
     const handleRead = () => {
         socket.emit('disconnect',)
         setNotification([]);
@@ -80,6 +102,7 @@ const Navbar = ({ socket }) => {
     };
 
     return (
+        <>
         <div className="topbarContainer">
             <div className="topbarLeft">
                 <Link to="/" style={{ textDecoration: "none" }}>
@@ -95,7 +118,6 @@ const Navbar = ({ socket }) => {
                         onChange={(e)=>{setquery(e.target.value.toLowerCase())}}
                     />
                 </div>
-                <Search/>
             </div>
             <div className="topbarRight">
                 <div className="topbarLinks">
@@ -140,6 +162,9 @@ const Navbar = ({ socket }) => {
                 </div>
             )}
         </div>
+        <Search users={users}/>
+        </>
+
     )
 }
 

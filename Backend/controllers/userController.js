@@ -227,7 +227,6 @@ module.exports.curruser = async (req, res) => {
 
 module.exports.getallusers = async (req, res) => {
     const {q} = req.query;
-    console.log(q);
     try {
         const users = await User.find({});
         
