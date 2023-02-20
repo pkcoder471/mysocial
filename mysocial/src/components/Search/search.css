@@ -1,5 +1,39 @@
 .searchList{
-    padding: 0;
-    margin: 0;
-    list-style: none;
+    position: absolute ;
+    position: fixed;
+    top: 50px;
+    right: 520px;
+    background-color: white;
+    color: black;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    max-height: 300px;
+    width: 615px;
+    overflow-y: scroll;
+    box-shadow: rgb(0 0 0 / 6%) 0px 1px 8px;
+    border-radius: 5px;
+    z-index: 1;
 }
+.Friend {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .FriendImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+
+  .FriendName{
+    color: black;
+    font-weight: 400;
+  }
+  a{
+    text-decoration: none;
+  }

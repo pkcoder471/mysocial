@@ -116,6 +116,7 @@ const Navbar = ({ socket }) => {
                         placeholder=" Search for friend "
                         className="searchInput"
                         onChange={(e)=>{setquery(e.target.value.toLowerCase())}}
+                        value={query}
                     />
                 </div>
             </div>
@@ -162,7 +163,7 @@ const Navbar = ({ socket }) => {
                 </div>
             )}
         </div>
-        <Search users={users}/>
+        {query.length>0 && <Search users={users} setquery={setquery}/>}
         </>
 
     )
