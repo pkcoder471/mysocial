@@ -1,5 +1,7 @@
-import React ,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Conversation from '../Conversation/Conversation'
+import Message from '../Message/Message'
 import Navbar from '../Navbar/Navbar'
 import "./messenger.css"
 
@@ -9,29 +11,30 @@ const Messenger = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      if(!localStorage.getItem('token')){
-        navigate('/login');
-      }
-    //eslint-disable-next-line
+        if (!localStorage.getItem('token')) {
+            navigate('/login');
+        }
+        //eslint-disable-next-line
     }, [])
-    
-  return (
-    <>
-      <Navbar />
-      <div className="messenger">
-        <div className="chatMenu">
-          <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
-            {/* {conversations.map((c) => (
+
+    return (
+        <>
+            <Navbar />
+            <div className="messenger">
+                <div className="chatMenu">
+                    <div className="chatMenuWrapper">
+                        <input placeholder="Search for friends" className="chatMenuInput" />
+                        <Conversation />
+                        {/* {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation conversation={c} currentUser={user} />
               </div>
             ))} */}
-          </div>
-        </div>
-        <div className="chatBox">
-          <div className="chatBoxWrapper">
-            {/* {currentChat ? (
+                    </div>
+                </div>
+                <div className="chatBox">
+                    <div className="chatBoxWrapper">
+                        {/* {currentChat ? (
               <>
                 <div className="chatBoxTop">
                   {messages.map((m) => (
@@ -57,20 +60,23 @@ const Messenger = () => {
                 Open a conversation to start a chat.
               </span>
             )} */}
-          </div>
-        </div>
-        <div className="chatOnline">
-          <div className="chatOnlineWrapper">
-            {/* <ChatOnline
+                        <Message own={true} />
+                        <Message />
+                        <Message own={true} />
+                    </div>
+                </div>
+                <div className="chatOnline">
+                    <div className="chatOnlineWrapper">
+                        {/* <ChatOnline
               onlineUsers={onlineUsers}
               currentId={user._id}
               setCurrentChat={setCurrentChat}
             /> */}
-          </div>
-        </div>
-      </div>
-    </>
-  )
+                    </div>
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default Messenger

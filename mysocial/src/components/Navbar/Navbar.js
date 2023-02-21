@@ -125,12 +125,12 @@ const Navbar = ({ socket }) => {
                     <Link to='/'><span className="topbarLink">Homepage</span></Link>
                 </div>
                 <div className="topbarIcons">
-                    <div className="topbarIconItem">
+                    <div className="topbarIconItem" onClick={() => navigate('/messenger')}>
                         <i className="fa-regular fa-message"></i>
                         <span className="topbarIconBadge">1</span>
                     </div>
-                    <div className="topbarIconItem">
-                        <i className="fa-solid fa-bell" onClick={() => setOpen(!open)} ></i>
+                    <div className="topbarIconItem" onClick={() => setOpen(!open)}>
+                        <i className="fa-solid fa-bell"  ></i>
                         {notification.length>0 && <span className="topbarIconBadge">
                             {notification.length}
                         </span>}
