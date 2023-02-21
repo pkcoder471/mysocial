@@ -64,6 +64,17 @@ const Messenger = () => {
                         <Message />
                         <Message own={true} />
                     </div>
+                    <div className="chatBoxBottom">
+                  <textarea
+                    className="chatMessageInput"
+                    placeholder="write something..."
+                    // onChange={(e) => setNewMessage(e.target.value)}
+                    // value={newMessage}
+                  ></textarea>
+                  <button className="chatSubmitButton" >
+                    Send
+                  </button>
+                </div>
                 </div>
                 <div className="chatOnline">
                     <div className="chatOnlineWrapper">
