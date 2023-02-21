@@ -9,6 +9,7 @@ import CommentState from "./context/comments/CommentState";
 import Profile from "./components/Profile/Profile";
 import { io } from "socket.io-client";
 import { useEffect,useState } from "react";
+import Messenger from "./components/Messenger/Messenger";
 
 function App() {
   const [socket, setsocket] = useState(null);
@@ -33,7 +34,6 @@ function App() {
 
     }
     getCurruser();
-    //eslint-disable-next-line
   }, [socket])
   
   return (
@@ -47,6 +47,7 @@ function App() {
       <Route exact path='/login' element={<Login/>}/>
       <Route exact path='/signUp' element={<SignUp/>}/>
       <Route exact path='/profile/:id' element={<Profile socket={socket} />}/>
+      <Route exact path='/messenger' element={<Messenger socket={socket} />}/>
     </Routes>
     </BrowserRouter>
     </CommentState>

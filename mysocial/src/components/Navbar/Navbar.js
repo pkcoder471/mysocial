@@ -163,7 +163,7 @@ const Navbar = ({ socket }) => {
                 </div>
             )}
         </div>
-        {query.length>0 && <Search users={users} setquery={setquery}/>}
+        {users.length>0 && <Search users={users} setquery={setquery}/>}
         </>
 
     )
