@@ -10,6 +10,7 @@ import Profile from "./components/Profile/Profile";
 import { io } from "socket.io-client";
 import { useEffect,useState } from "react";
 import Messenger from "./components/Messenger/Messenger";
+import MessengerState from "./context/messenger/MessengerState";
 
 function App() {
   const [socket, setsocket] = useState(null);
@@ -41,6 +42,7 @@ function App() {
     <UserState>
     <PostState>
     <CommentState>
+    <MessengerState>
     <BrowserRouter>
     <Routes>
       <Route exact path='/' element={<Home socket={socket}/>}/>
@@ -50,6 +52,7 @@ function App() {
       <Route exact path='/messenger' element={<Messenger socket={socket} />}/>
     </Routes>
     </BrowserRouter>
+    </MessengerState>
     </CommentState>
     </PostState>
     </UserState>

@@ -6,6 +6,7 @@ const UserState = (props) => {
     const [Friends, setFriends] = useState([])
     const [userFriends, setuserFriends] = useState([])
     const [curruser, setcurruser] = useState({})
+    const [user, setuser] = useState({})
 
     const getFriends = async (id) => {
         const response = await fetch(`${url}/api/user/getfriends/${id}`, {
@@ -68,6 +69,18 @@ const UserState = (props) => {
 
     }
 
+    const getUser = async (id) => {
+        const response = await fetch(`${url}/api/user/getUser/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('token')
+          },
+        });
+        const json = await response.json();
+        setuser(json);
+      }
+
     const updateUser = async (user,setuser,name,about,city,relationship,coverPic,profilePic) => {
         console.log("hello");
         const response = await fetch(`${url}/api/user/update/${user._id}`, {
@@ -86,7 +99,7 @@ const UserState = (props) => {
 
 
     return (
-        <UserContext.Provider value={{ getFriends, Friends, getuserFriends, userFriends, getCurruser, curruser, followuser,updateUser }}>
+        <UserContext.Provider value={{ getFriends, Friends, getuserFriends, userFriends, getCurruser, curruser, followuser,updateUser,getUser,user }}>
             {props.children}
         </UserContext.Provider>
     )

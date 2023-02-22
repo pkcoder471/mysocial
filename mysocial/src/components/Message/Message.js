@@ -1,7 +1,8 @@
-import React from 'react'
-import "./message.css"
+import React from 'react';
+import {format} from "timeago.js";
+import "./message.css";
 
-const Message = ({ own }) => {
+const Message = ({ message,own }) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     return (
@@ -12,11 +13,9 @@ const Message = ({ own }) => {
                     src={PF + 'noAvatar.png'}
                     alt=""
                 />
-                {/* <p className="messageText">{message.text}</p> */}
-                <p className="messageText">Lorem, ipsum dolor sit amet consectetur adipisicing elit. A nostrum hic placeat, illo, ab ea laborum vel aliquid quaerat commodi voluptatibus quos, sit dolore consequuntur recusandae. Cum, incidunt rerum. Cupiditate!</p>
+                <p className="messageText">{message.text}</p>
             </div>
-            {/* <div className="messageBottom">{format(message.createdAt)}</div> */}
-            <div className="messageBottom">1 hour ago</div>
+            <div className="messageBottom">{format(message.createdAt)}</div>
         </div>
     )
 }

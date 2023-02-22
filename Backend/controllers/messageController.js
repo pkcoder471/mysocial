@@ -5,7 +5,7 @@ module.exports.add = async (req,res) =>{
 
     try {
         const savedMessage = await newMessage.save();
-        res.status(200).json(savedMessage);
+        return res.status(200).json(savedMessage);
     } catch (err) {
 
         return res.status(500).json({error:"Internal Server error!"})
@@ -20,7 +20,7 @@ module.exports.get = async (req,res) =>{
         const messages = await Message.find({
             conversationId: req.params.conversationId
         })
-        res.status(200).json(messages);
+        return res.status(200).json(messages);
     } catch (err) {
 
         return res.status(500).json({error:"Internal Server error!"})

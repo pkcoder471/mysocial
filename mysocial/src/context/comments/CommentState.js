@@ -4,19 +4,6 @@ const CommentState = (props) => {
 
     const url = 'http://localhost:5000';
 
-    // const fetchAllComments = async (id) =>{
-    //     const response = await fetch(`${url}/api/comment/getall/${id}`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'auth-token': localStorage.getItem('token') 
-    //         },
-    //     });
-    //     const json = await response.json();
-    //     json.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
-    //     console.log(json);
-    //     setcomments(json);
-    // }
 
     const addComment = async (setcomments,comments,content,id) =>{
         const response = await fetch(`${url}/api/comment/create/${id}`, {
