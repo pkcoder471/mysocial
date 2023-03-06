@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useContext } from 'react'
+import React, { useEffect, useState ,useContext, useRef} from 'react'
 import { useNavigate } from 'react-router-dom'
 import Conversation from '../Conversation/Conversation'
 import Message from '../Message/Message'
@@ -14,7 +14,9 @@ const Messenger = () => {
   const url = 'http://localhost:5000';
   const messageContext = useContext(messengerContext);
   const [currentChat, setcurrentChat] = useState(null)
-  const {getConversations,conversations,getMessages,messages} = messageContext;
+  const {getConversations,conversations,getMessages,messages,addMessage} = messageContext;
+  const [newMessage, setnewMessage] = useState("");
+  const scrollRef = useRef();
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
@@ -44,8 +46,17 @@ const Messenger = () => {
   useEffect(() => {
     getMessages(currentChat?._id);
   }, [currentChat,getMessages])
+
+  const handleSubmit = (e) =>{
+      e.preventDefault(); 
+      addMessage(curruser._id,currentChat._id,newMessage);
+      setnewMessage("");
+  }
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({behavior:"smooth"})
+  }, [messages])
   
-  console.log(messages);
 
   return (
     <>
@@ -67,39 +78,28 @@ const Messenger = () => {
               <>
                 <div className="chatBoxTop">
                   {messages.map((m) => (
-                    <div >
+                    <div ref={scrollRef}>
                       <Message message={m} own={m.sender === curruser._id} />
                     </div>
                   ))}
                 </div>
-                {/* <div className="chatBoxBottom">
+                <div className="chatBoxBottom">
                   <textarea
                     className="chatMessageInput"
                     placeholder="write something..."
-                    onChange={(e) => setNewMessage(e.target.value)}
+                    onChange={(e) => setnewMessage(e.target.value)}
                     value={newMessage}
                   ></textarea>
                   <button className="chatSubmitButton" onClick={handleSubmit}>
                     Send
                   </button>
-                </div> */}
+                </div>
               </>
             ) : (
               <span className="noConversationText">
                 Open a conversation to start a chat.
               </span>
             )}
-          </div>
-          <div className="chatBoxBottom">
-            <textarea
-              className="chatMessageInput"
-              placeholder="write something..."
-            // onChange={(e) => setNewMessage(e.target.value)}
-            // value={newMessage}
-            ></textarea>
-            <button className="chatSubmitButton" >
-              Send
-            </button>
           </div>
         </div>
         <div className="chatOnline">

@@ -79,7 +79,7 @@ const UserState = (props) => {
         });
         const json = await response.json();
         setuser(json);
-      }
+    }
 
     const updateUser = async (user,setuser,name,about,city,relationship,coverPic,profilePic) => {
         console.log("hello");

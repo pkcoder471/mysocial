@@ -17,7 +17,6 @@ const MessengerState = (props) =>{
         });
         const json = await response.json();
         setconversations(json);
-
     }
 
     const getMessages = async (id) =>{
@@ -32,8 +31,23 @@ const MessengerState = (props) =>{
         setmessages(json);
 
     }
+    const addMessage = async (sender,conversationId,text) =>{
+        const response = await fetch(`${url}/api/message`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token') 
+            },
+            body: JSON.stringify({sender,conversationId,text})
+
+        });
+        const json = await response.json();
+        const newMessages = messages.concat(json);
+        setmessages(newMessages);
+    }
+
     return(
-        <messengerContext.Provider value={{getConversations,conversations,getMessages,messages}}>
+        <messengerContext.Provider value={{getConversations,conversations,getMessages,messages,addMessage}}>
             {props.children}
         </messengerContext.Provider>
     )
