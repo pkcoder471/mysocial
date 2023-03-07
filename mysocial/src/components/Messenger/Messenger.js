@@ -5,17 +5,19 @@ import Message from '../Message/Message'
 import Navbar from '../Navbar/Navbar'
 import messengerContext from '../../context/messenger/messengerContext'
 import "./messenger.css"
+import userContext from '../../context/users/userContext'
 
 
-const Messenger = () => {
+const Messenger = ({socket}) => {
 
   const [curruser, setcurruser] = useState({})
   const navigate = useNavigate();
   const url = 'http://localhost:5000';
   const messageContext = useContext(messengerContext);
   const [currentChat, setcurrentChat] = useState(null)
-  const {getConversations,conversations,getMessages,messages,addMessage} = messageContext;
+  const {getConversations,conversations,setmessages,getMessages,messages,addMessage} = messageContext;
   const [newMessage, setnewMessage] = useState("");
+  const [arrivalMessage, setarrivalMessage] = useState(null)
   const scrollRef = useRef();
 
   useEffect(() => {
@@ -49,13 +51,37 @@ const Messenger = () => {
 
   const handleSubmit = (e) =>{
       e.preventDefault(); 
+      const receiverId = currentChat.members.find(member=> member!==curruser._id);
+
+      socket?.emit("sendMessage",{
+        senderId: curruser._id,
+        receiverId,
+        text:newMessage
+      })
       addMessage(curruser._id,currentChat._id,newMessage);
       setnewMessage("");
   }
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({behavior:"smooth"})
+    scrollRef.current?.scrollIntoView({behavior:'smooth'})
   }, [messages])
+
+  useEffect(() => {
+    socket?.on("getMessage",data=>{
+      setarrivalMessage({
+        sender:data.senderId,
+        text:data.text,
+        createdAt:Date.now(),
+      })
+    })
+  }, [socket])
+
+  useEffect(() => {
+    arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) &&
+    setmessages(prev=>[...messages,arrivalMessage]);
+  }, [arrivalMessage,currentChat,setmessages,messages])
+  
+  
   
 
   return (

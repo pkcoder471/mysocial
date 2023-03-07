@@ -24,29 +24,36 @@ const getUser = (userId) => {
 
 io.on('connection', (socket) => {
 
-    
-    socket.on("newUser",(userId) =>{
-        addNewUser(userId,socket.id);
-        io.emit("fetchOnlineusers",onlineUsers);
+
+    socket.on("newUser", (userId) => {
+        addNewUser(userId, socket.id);
+        io.emit("fetchOnlineusers", onlineUsers);
     })
 
-    
-
-    socket.on("sendNotification",({senderName,receiverName,type})=>{
-        if(senderName._id!==receiverName._id){
-        const receiver = getUser(receiverName._id);
-        if(receiver){
-        io.to(receiver.socketId).emit("getNotification",{
-            senderName,
-            type,
+    socket.on("sendMessage",({senderId,receiverId,text})=>{
+        const user = getUser(receiverId);
+        io.to(user?.socketId).emit("getMessage",{
+            senderId,
+            text,
         })
+    })
+
+
+    socket.on("sendNotification", ({ senderName, receiverName, type }) => {
+        if (senderName._id !== receiverName._id) {
+            const receiver = getUser(receiverName._id);
+            if (receiver) {
+                io.to(receiver.socketId).emit("getNotification", {
+                    senderName,
+                    type,
+                })
+            }
         }
-        }
-        
+
     })
     socket.on("disconnect", () => {
         removeUser(socket.id);
-        io.emit("fetchOnlineusers",onlineUsers);
+        io.emit("fetchOnlineusers", onlineUsers);
     })
 });
 

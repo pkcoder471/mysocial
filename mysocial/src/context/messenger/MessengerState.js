@@ -47,7 +47,7 @@ const MessengerState = (props) =>{
     }
 
     return(
-        <messengerContext.Provider value={{getConversations,conversations,getMessages,messages,addMessage}}>
+        <messengerContext.Provider value={{getConversations,conversations,getMessages,messages,setmessages,addMessage}}>
             {props.children}
         </messengerContext.Provider>
     )
