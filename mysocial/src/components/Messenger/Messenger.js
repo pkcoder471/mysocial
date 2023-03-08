@@ -5,22 +5,25 @@ import Message from '../Message/Message'
 import Navbar from '../Navbar/Navbar'
 import messengerContext from '../../context/messenger/messengerContext'
 import "./messenger.css"
-import userContext from '../../context/users/userContext'
 import Search from '../Search/Search'
+import ChatOnline from '../ChatOnline/ChatOnline'
+import userContext from '../../context/users/userContext'
 
-
-const Messenger = ({ socket }) => {
+const Messenger = ({ socket}) => {
 
   const [curruser, setcurruser] = useState({})
   const navigate = useNavigate();
   const url = 'http://localhost:5000';
   const messageContext = useContext(messengerContext);
+  const context = useContext(userContext);
   const [currentChat, setcurrentChat] = useState(null)
-  const { getConversations, conversations, setmessages, getMessages, messages, addMessage } = messageContext;
+  const {userFriends,getuserFriends} = context;
+  const { getConversations, conversations, setconversations,setmessages, getMessages, messages, addMessage } = messageContext;
   const [newMessage, setnewMessage] = useState("");
   const [arrivalMessage, setarrivalMessage] = useState(null)
   const [query, setquery] = useState("");
   const [users, setusers] = useState([]);
+  const [newusers, setnewusers] = useState([]);
   const scrollRef = useRef();
 
   useEffect(() => {
@@ -41,6 +44,10 @@ const Messenger = ({ socket }) => {
         },
       });
       const json = await response.json();
+      getuserFriends(json._id);
+      socket?.on("fetchOnlineusers", users => {
+        setnewusers(json.followings.filter((f) => users.some((u) => u.userId === f)));
+      })
       getConversations(json._id);
       setcurruser(json);
 
@@ -54,7 +61,7 @@ const Messenger = ({ socket }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const receiverId = currentChat.members.find(member => member !== curruser._id);
+    const receiverId = currentChat?.members.find(member => member !== curruser._id);
 
     socket?.emit("sendMessage", {
       senderId: curruser._id,
@@ -66,8 +73,8 @@ const Messenger = ({ socket }) => {
   }
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+    scrollRef.current?.scrollIntoView({ behavior:'smooth' })
+  }, [scrollRef,messages])
 
   useEffect(() => {
     socket?.on("getMessage", data => {
@@ -82,7 +89,7 @@ const Messenger = ({ socket }) => {
   useEffect(() => {
     arrivalMessage && currentChat?.members.includes(arrivalMessage.sender) &&
       setmessages(prev => [...messages, arrivalMessage]);
-  }, [arrivalMessage, currentChat, setmessages, messages])
+  }, [arrivalMessage])
 
   useEffect(() => {
     const getallUsers = async () => {
@@ -155,11 +162,14 @@ const Messenger = ({ socket }) => {
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            {/* <ChatOnline
-              onlineUsers={onlineUsers}
-              currentId={user._id}
-              setCurrentChat={setCurrentChat}
-            /> */}
+            <ChatOnline
+              userFriends={userFriends}
+              users={newusers}
+              currentId={curruser._id}
+              setconversations={setconversations}
+              conversations={conversations}
+              setcurrentChat={setcurrentChat}
+            />
           </div>
         </div>
       </div>

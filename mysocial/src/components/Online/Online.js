@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
-import userContext from '../../context/users/userContext';
+import React, { useState, useEffect} from 'react'
 import "./online.css"
 
-const Online = ({ users, userFriends }) => {
+const Online = ({ users, userFriends ,setcurrentChat}) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [onlineFriends, setOnlineFriends] = useState([]);
 
@@ -12,10 +11,12 @@ const Online = ({ users, userFriends }) => {
 
     }, [userFriends, users])
 
+    
+
     return (
         <div className="chatOnline">
             {onlineFriends.map((o) => (
-                <li style={{ listStyleType: "none" }} key={o._id}>
+                <li style={{ listStyleType: "none" }} key={o._id} >
                     <div className="chatOnlineFriend">
                         <div className="chatOnlineImgContainer">
                             <img

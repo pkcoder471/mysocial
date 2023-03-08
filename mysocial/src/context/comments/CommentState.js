@@ -1,5 +1,4 @@
 import commentContext from "./commentContext";
-import { useState } from "react";
 const CommentState = (props) => {
 
     const url = 'http://localhost:5000';

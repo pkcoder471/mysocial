@@ -23,3 +23,15 @@ module.exports.getconv = async (req,res) =>{
     return res.status(500).json({error:"Internal Server error!"})
     }
 }
+
+module.exports.getconvnew = async (req,res) =>{
+    
+    try {
+        const conversation = await Conversation.findOne({
+            members:{$all:[req.params.firstUserId,req.params.secondUserId]},
+        })
+        return res.status(200).json(conversation);
+    } catch (err) {
+    return res.status(500).json({error:"Internal Server error!"})
+    }
+}
