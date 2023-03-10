@@ -7,7 +7,7 @@ const Search = ({ users ,setquery }) => {
   return (
     <div className='searchList'>
       {users.map((u) => (
-        <li className="Friend">
+        <li className="Friend" key={u._id}>
           <Link to={`/profile/${u._id}`} onClick={(e)=> setquery("")}>
             <img
               className="FriendImg"

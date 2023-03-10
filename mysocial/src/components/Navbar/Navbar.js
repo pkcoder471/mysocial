@@ -127,7 +127,6 @@ const Navbar = ({ socket }) => {
                 <div className="topbarIcons">
                     <div className="topbarIconItem" onClick={() => navigate('/messenger')}>
                         <i className="fa-regular fa-message"></i>
-                        <span className="topbarIconBadge">1</span>
                     </div>
                     <div className="topbarIconItem" onClick={() => setOpen(!open)}>
                         <i className="fa-solid fa-bell"  ></i>

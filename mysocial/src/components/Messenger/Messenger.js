@@ -5,11 +5,11 @@ import Message from '../Message/Message'
 import Navbar from '../Navbar/Navbar'
 import messengerContext from '../../context/messenger/messengerContext'
 import "./messenger.css"
-import Search from '../Search/Search'
 import ChatOnline from '../ChatOnline/ChatOnline'
 import userContext from '../../context/users/userContext'
+import SearchChat from '../SearchChat/SearchChat'
 
-const Messenger = ({ socket}) => {
+const Messenger = ({ socket }) => {
 
   const [curruser, setcurruser] = useState({})
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ const Messenger = ({ socket}) => {
   const messageContext = useContext(messengerContext);
   const context = useContext(userContext);
   const [currentChat, setcurrentChat] = useState(null)
-  const {userFriends,getuserFriends} = context;
-  const { getConversations, conversations, setconversations,setmessages, getMessages, messages, addMessage } = messageContext;
+  const { userFriends, getuserFriends } = context;
+  const { getConversations, conversations, setconversations, setmessages, getMessages, messages, addMessage } = messageContext;
   const [newMessage, setnewMessage] = useState("");
   const [arrivalMessage, setarrivalMessage] = useState(null)
   const [query, setquery] = useState("");
@@ -73,8 +73,8 @@ const Messenger = ({ socket}) => {
   }
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior:'smooth' })
-  }, [scrollRef,messages])
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [scrollRef, messages])
 
   useEffect(() => {
     socket?.on("getMessage", data => {
@@ -122,7 +122,12 @@ const Messenger = ({ socket}) => {
               onChange={(e) => { setquery(e.target.value.toLowerCase()) }}
               value={query}
             />
-            {users.length > 0 && <Search users={users} setquery={setquery} />}
+            {users.length > 0 && <SearchChat users={users}
+              setquery={setquery}
+              currentId={curruser._id}
+              setconversations={setconversations}
+              conversations={conversations}
+              setcurrentChat={setcurrentChat} />}
             {conversations.map((c) => (
               <div onClick={() => { setcurrentChat(c) }}>
                 <Conversation key={c._id} conversation={c} curruser={curruser} />
