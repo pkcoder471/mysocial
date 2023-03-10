@@ -9,12 +9,13 @@ import userContext from '../../context/users/userContext';
 
 import { useContext } from 'react'
 import "./home.css"
+import Spinner from '../Spinner/Spinner';
 
 const Home = ({socket}) => {
   const navigate = useNavigate();
   const contextpost = useContext(postContext);
   const {getPosts,posts} =  contextpost;
-  
+  const [loading, setloading] = useState(true);
   const context = useContext(userContext);
   const { getuserFriends , userFriends } = context;
   useEffect(() => {
@@ -23,7 +24,9 @@ const Home = ({socket}) => {
       navigate('/login');
     }
     else{
+      setloading(true);
       getPosts();
+      setloading(false);
     }
     //eslint-disable-next-line
   }, [])
@@ -43,7 +46,9 @@ const Home = ({socket}) => {
       });
       const json = await response.json();
       socket?.emit("newUser",json._id)
+      setloading(true);
       getuserFriends(json._id);
+      setloading(false);
 
       setcurruser(json);
 
@@ -58,8 +63,9 @@ const Home = ({socket}) => {
       <Navbar socket = {socket}/>
       <div className="homeContainer">
         <Sidebar />
-        <Feed socket = {socket} posts={posts} id={curruser._id}/>
-        <Rightbar socket = {socket} userFriends={userFriends}/>
+        {/* <Spinner/> */}
+        <Feed socket = {socket} posts={posts} id={curruser._id} loading={loading}/>
+        <Rightbar socket = {socket} userFriends={userFriends} loading={loading}/>
       </div>
     </>
   )

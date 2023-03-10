@@ -11,6 +11,9 @@ const SearchChat = ({ users ,setquery,currentId,setcurrentChat,setconversations,
 
   const handleClick = async (user) =>{
     setquery("")
+    if(currentId==user._id){
+        alert("can't chat with yourself")
+    }
     const response = await fetch(`${url}/api/conversation/find/${currentId}/${user._id}`, {
         method: 'GET',
         headers: {

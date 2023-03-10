@@ -2,8 +2,9 @@ import React,{useEffect,useState} from 'react'
 import Post from '../Post/Post'
 import "./feed.css";
 import Addpost from '../Addpost/Addpost';
+import Spinner from '../Spinner/Spinner';
 
-const Feed = ({posts,id,socket}) => {
+const Feed = ({posts,id,socket,loading}) => {
   const url = 'http://localhost:5000';
   const [curruser, setcurruser] = useState({})
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -33,6 +34,7 @@ const Feed = ({posts,id,socket}) => {
     <div className="feed">
       <div className="feedWrapper">
         {id===curruser._id && <Addpost/>}
+        {loading && <Spinner/>}
         {posts.length!==0 ? posts.map((p) => {
           return <Post socket = {socket} key={p._id} post={p} />
           }):

@@ -3,8 +3,9 @@ import "./rightbar.css"
 import userContext from '../../context/users/userContext';
 import { Link } from 'react-router-dom';
 import Online from '../Online/Online';
+import Spinner from '../Spinner/Spinner';
 
-const Rightbar = ({ userFriends, user, socket}) => {
+const Rightbar = ({ userFriends, user, socket,loading}) => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const url = 'http://localhost:5000';
@@ -53,7 +54,7 @@ const Rightbar = ({ userFriends, user, socket}) => {
   //HomeRightbar Ends
 
   //ProfileRightbar starts
-  const ProfileRightbar = ({ userFriends, user, socket }) => {
+  const ProfileRightbar = ({ userFriends, user, socket , loading }) => {
 
     const [isfollowed, setisfollowed] = useState(false);
     const [curruser, setcurruser] = useState({})
@@ -117,6 +118,7 @@ const Rightbar = ({ userFriends, user, socket}) => {
           </div>
         </div>
         <h4 className="rightbarTitle">User friends</h4>
+        {loading && <Spinner/>}
         <div className="rightbarFollowings">
           {userFriends.length === 0 ? <h4 style={{ color: "gray" }}>No friends...</h4> : userFriends.map((friend) => (
             <li style={{ listStyleType: "none" }} key={friend._id}><Link
@@ -147,7 +149,7 @@ const Rightbar = ({ userFriends, user, socket}) => {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {user ? <ProfileRightbar user={user} userFriends={userFriends} socket={socket} /> : <HomeRightbar socket={socket} userFriends={userFriends}/>}
+        {user ? <ProfileRightbar user={user} userFriends={userFriends} socket={socket} loading={loading}/> : <HomeRightbar socket={socket} userFriends={userFriends}/>}
       </div>
     </div>
   )
