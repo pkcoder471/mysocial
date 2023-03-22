@@ -11,7 +11,7 @@ const SearchChat = ({ users ,setquery,currentId,setcurrentChat,setconversations,
 
   const handleClick = async (user) =>{
     setquery("")
-    if(currentId==user._id){
+    if(currentId===user._id){
         alert("can't chat with yourself")
     }
     const response = await fetch(`${url}/api/conversation/find/${currentId}/${user._id}`, {
@@ -31,7 +31,7 @@ const SearchChat = ({ users ,setquery,currentId,setcurrentChat,setconversations,
     }
 }
   return (
-    <div className='searchList'>
+    <div className='searchChatList'>
       {users.map((u) => (
         <li className="Friend" key={u._id}>
           <Link onClick={()=>{handleClick(u)}}>
