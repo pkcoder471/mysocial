@@ -1,17 +1,17 @@
 import React,{useState,useEffect,useContext} from 'react'
 import "./chatOnline.css";
 import messengerContext from '../../context/messenger/messengerContext';
-
+ 
 const ChatOnline = ({ users, userFriends ,setcurrentChat,currentId,setconversations,conversations}) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [onlineFriends, setOnlineFriends] = useState([]);
-    const url = 'http://localhost:5000';
+    const url = 'http://localhost:5000';   
     const messageContext = useContext(messengerContext);
     const {createConversation,newconversation} = messageContext;
 
-
+   
     useEffect(() => {
-
+  
         setOnlineFriends(userFriends.filter((f) => users.includes(f._id)));
 
     }, [userFriends, users])

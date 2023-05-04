@@ -38,7 +38,7 @@ const Feed = ({posts,id,socket,loading}) => {
         {posts.length!==0 ? posts.map((p) => {
           return <Post socket = {socket} key={p._id} post={p} />
           }):
-          <img className='no-posts' src={PF+"no_posts.png"} alt=""></img>
+          <img className='no-posts' src={PF+"no_posts.jpg"} alt=""></img>
           }
       </div>
     </div>
