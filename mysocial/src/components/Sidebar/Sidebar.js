@@ -8,7 +8,7 @@ const Sidebar = () => {
     const context = useContext(userContext);
     const { getFriends, Friends } = context;
 
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
 
 
     useEffect(() => {

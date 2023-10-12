@@ -8,7 +8,7 @@ import Spinner from '../Spinner/Spinner';
 const Rightbar = ({ userFriends, user, socket,loading}) => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const url = 'http://localhost:5000';
+  const url = process.env.REACT_APP_URL;
 
   //HomeRightbar starts
 

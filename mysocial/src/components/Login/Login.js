@@ -6,7 +6,7 @@ const Login = () => {
     
     const navigate = useNavigate();
     const [credentials, setcredentials] = useState({ email: "", password: "" });
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
 
     useEffect(() => {
       if(localStorage.getItem('token')){

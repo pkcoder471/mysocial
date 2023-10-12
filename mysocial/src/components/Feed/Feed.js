@@ -5,7 +5,7 @@ import Addpost from '../Addpost/Addpost';
 import Spinner from '../Spinner/Spinner';
 
 const Feed = ({posts,id,socket,loading}) => {
-  const url = 'http://localhost:5000';
+  const url = process.env.REACT_APP_URL;
   const [curruser, setcurruser] = useState({})
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 

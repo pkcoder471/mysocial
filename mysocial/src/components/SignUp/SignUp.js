@@ -6,7 +6,7 @@ import './signUp.css';
 const SignUp = () => {
     const navigate = useNavigate();
     const [credentials, setcredentials] = useState({ name: "", email: "", password: "", cpassword: "" });
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
 
     const handleSignup = async (e) => {
         e.preventDefault();

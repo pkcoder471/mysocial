@@ -5,7 +5,7 @@ import "./searchChat.css"
 
 const SearchChat = ({ users ,setquery,currentId,setcurrentChat,setconversations,conversations}) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const url = 'http://localhost:5000';
+  const url = process.env.REACT_APP_URL;
   const messageContext = useContext(messengerContext);
   const {createConversation,newconversation} = messageContext;
 

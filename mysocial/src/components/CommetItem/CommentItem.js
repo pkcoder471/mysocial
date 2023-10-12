@@ -11,7 +11,7 @@ const CommentItem = ({ comments,setcomments,comment }) => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const url = 'http://localhost:5000';
+  const url = process.env.REACT_APP_URL;
   const [user, setuser] = useState({})
   const [curruser, setcurruser] = useState({})
 

@@ -1,7 +1,7 @@
 import commentContext from "./commentContext";
 const CommentState = (props) => {
 
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
 
 
     const addComment = async (setcomments,comments,content,id) =>{

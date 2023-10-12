@@ -31,7 +31,7 @@ const Home = ({socket}) => {
     //eslint-disable-next-line
   }, [])
 
-  const url = 'http://localhost:5000';
+  const url = process.env.REACT_APP_URL;
   const [curruser, setcurruser] = useState({})
 
   useEffect(() => {

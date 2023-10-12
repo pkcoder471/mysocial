@@ -6,7 +6,7 @@ import "./comment.css";
 const Comment = ({ postId ,socket,user}) => {
 
     const context = useContext(commentContext);
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
 
     const { addComment } = context;
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;

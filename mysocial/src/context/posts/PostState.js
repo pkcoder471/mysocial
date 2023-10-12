@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const PostState = (props) =>{
 
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
     const postInitial = [];
     const [posts, setposts] = useState(postInitial);
     const [userposts, setuserposts] = useState(postInitial);

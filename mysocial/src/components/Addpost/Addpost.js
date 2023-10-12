@@ -6,7 +6,7 @@ import "./addpost.css"
 const Addpost = () => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
 
     const contextuser = useContext(userContext);
     const contextpost = useContext(postContext);

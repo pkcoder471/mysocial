@@ -7,7 +7,7 @@ const fs = require('fs');
 connectTOMongo();
 
 const app = express();
-port = 5000;
+port = process.env.PORT || 5000;
 //it will redirect me to my img folder
 app.use('/img',express.static(path.join(__dirname,"public/img")));
 

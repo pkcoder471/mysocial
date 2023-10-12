@@ -13,7 +13,7 @@ import userContext from '../../context/users/userContext';
 const Profile = ({socket}) => {
     const id = useParams().id;
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
     const contextpost = useContext(postContext);
     const { getPostsofUser, userposts } = contextpost;
     const context = useContext(userContext);

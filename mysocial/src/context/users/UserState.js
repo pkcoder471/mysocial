@@ -2,7 +2,7 @@ import UserContext from "./userContext";
 import { useState } from "react";
 const UserState = (props) => {
 
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
     const [Friends, setFriends] = useState([])
     const [userFriends, setuserFriends] = useState([])
     const [curruser, setcurruser] = useState({})

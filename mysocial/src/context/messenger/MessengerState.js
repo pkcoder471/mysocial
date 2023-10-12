@@ -6,7 +6,7 @@ const MessengerState = (props) =>{
     const [conversations, setconversations] = useState([]);
     const [messages, setmessages] = useState([])
     const [newconversation, setnewconversation] = useState({})
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
 
     const getConversations = async (id) =>{
         const response = await fetch(`${url}/api/conversation/${id}`, {

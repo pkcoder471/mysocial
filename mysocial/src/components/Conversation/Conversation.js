@@ -6,7 +6,7 @@ const Conversation = ({conversation,curruser}) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [user, setuser] = useState({})
     
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
     useEffect(() => {
         const friendId = conversation.members.find((m)=> m !== curruser._id);
         const getUser = async (id) => {

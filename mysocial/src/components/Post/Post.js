@@ -13,7 +13,7 @@ const Post = (props) => {
   const { deletePost, likePost } = contextpost;
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const url = 'http://localhost:5000';
+  const url = process.env.REACT_APP_URL;
   const [user, setuser] = useState({})
   const [curruser, setcurruser] = useState({})
 
@@ -72,6 +72,7 @@ const Post = (props) => {
 
   const handleDelete = async (e) => {
     e.preventDefault();
+    deletePost(post._id);
     const response = await fetch(`${url}/api/delete/${post.img}`, {
       method: 'DELETE',
       headers: {
@@ -79,7 +80,7 @@ const Post = (props) => {
       },
     });
     await response.json();
-    deletePost(post._id);
+    
   }
   return (
     <div className="post">

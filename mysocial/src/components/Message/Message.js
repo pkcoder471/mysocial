@@ -5,7 +5,7 @@ import "./message.css";
 const Message = ({ message,own }) => {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [user, setuser] = useState({});
-    const url = 'http://localhost:5000';
+    const url = process.env.REACT_APP_URL;
 
     useEffect(() => {
         const getUser = async () => {

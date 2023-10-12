@@ -13,7 +13,7 @@ const Messenger = ({ socket }) => {
 
   const [curruser, setcurruser] = useState({})
   const navigate = useNavigate();
-  const url = 'http://localhost:5000';
+  const url = process.env.REACT_APP_URL;
   const messageContext = useContext(messengerContext);
   const context = useContext(userContext);
   const [currentChat, setcurrentChat] = useState(null)
