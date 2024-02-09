@@ -96,7 +96,6 @@ const Navbar = ({ socket }) => {
     
 
     const handleRead = () => {
-        socket.emit('disconnect',)
         setNotification([]);
         setOpen(false);
     };
